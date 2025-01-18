@@ -1,5 +1,5 @@
 ---
-title: "datacasual"
+title: "Datacasual - Tales of an accidental data scientist"
 listing:
   contents: posts
   sort: "date desc"
