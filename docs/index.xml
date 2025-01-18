@@ -243,6 +243,1348 @@ Important
   <media:content url="https://3.bp.blogspot.com/-dYWcbKVsiGY/V8RFmMFnLjI/AAAAAAAAG9Y/Qr_PGmR0V8MhSXb8-rBdAsdciny-oql2ACLcB/s1600/1datasaurus.png" medium="image" type="image/png"/>
 </item>
 <item>
+  <title>The masked analyst</title>
+  <link>https://datacasual.com/posts/2020-05-07-masked-analyst.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>We are going to review the paper <a href="https://annals.org/aim/fullarticle/2764367/effectiveness-surgical-cotton-masks-blocking-sars-cov-2-controlled-comparison">Effectiveness of Surgical and Cotton Masks in Blocking SARS–CoV-2: A Controlled Comparison in 4 Patients</a> with a focus on the interpretation of the data.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>although we are going to nitpick the small report quite a lot, this is in no way an attack on the authors or their work. In fact I consider even this minute studies quite important given the current pandemic. Furthermore: there have been comments by several people about methodological mistakes in the study. I am in no position to comment on those. In fact I want to stress out that I am in no position of advising anybody on such a delicate topic except, maybe on how to avoid some common mistakes</p>
+</div>
+</div>
+<p>Apart for a personal interest in the topic of masks for source control of the COVID-19 pandemic, the two main reasons that make this paper a good subject of examination are that 1. the study is so small that we can easily rewrite the whole dataset and tear it apart at our convenience 2. it highlights a number of common pitfalls when interpreting/analysing data that any person working with data should be aware of</p>
+<p>The goal of the paper, as stated by the authors themselves is</p>
+<blockquote class="blockquote">
+<p>To evaluate the effectiveness of surgical and cotton masks in filtering SARS–CoV-2.</p>
+</blockquote>
+<p>In order to do that, they selected 4 patients with COVID-19 and had them cough on a petri dish kept 20 cm away, first without a mask, then with a surgical mask, then with a cotton mask, and finally a second time without a mask. After that, both the petri dishes and the masks were examined to measure the concentration of virus particles.</p>
+<p>The data gathered is all contained in this small table</p>
+<p><img src="https://datacasual.com/posts/masks/data_table.jpg" class="img-fluid"></p>
+</section>
+<section id="reproducing-the-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="reproducing-the-analysis">Reproducing the analysis</h2>
+<p>As I said, the amount of data gathered is so small that we can easily rewrite it by hand and peruse it. Since I am less interested in the mask surfaces measurements, I will leave those numbers out, especially considering that they look quite bizarre (there are a number of possible explanations for the inner side of the masks having way lower concentrations of virus particles than the outer side, but they are way beyond my understanding and scope for this post).</p>
+<div id="cell-6" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">naso_pha_swab <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.68</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.42</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.98</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.57</span>]</span>
+<span id="cb1-2">saliva_swab <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.29</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.59</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.91</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.51</span>]</span>
+<span id="cb1-3">control1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.53</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.14</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.52</span>, np.nan]</span>
+<span id="cb1-4">surgical_mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.26</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.21</span>, np.nan]</span>
+<span id="cb1-5">cotton_mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.27</span>, np.nan, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.42</span>, np.nan]</span>
+<span id="cb1-6">control2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.23</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.06</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.64</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.44</span>]</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">data_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[naso_pha_swab, saliva_swab, control1, control2, surgical_mask, cotton_mask], </span>
+<span id="cb1-9">             columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'patient1'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'patient2'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'patient3'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'patient4'</span>],</span>
+<span id="cb1-10">             index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'np_swab'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'saliva_swab'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'control_before'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'control_after'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'surgical_mask'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cotton_mask'</span>]).T</span>
+<span id="cb1-11"></span>
+<span id="cb1-12">data_df</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">np_swab</th>
+<th data-quarto-table-cell-role="th">saliva_swab</th>
+<th data-quarto-table-cell-role="th">control_before</th>
+<th data-quarto-table-cell-role="th">control_after</th>
+<th data-quarto-table-cell-role="th">surgical_mask</th>
+<th data-quarto-table-cell-role="th">cotton_mask</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient1</td>
+<td>7.68</td>
+<td>4.29</td>
+<td>3.53</td>
+<td>3.23</td>
+<td>3.26</td>
+<td>2.27</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient2</td>
+<td>5.42</td>
+<td>2.59</td>
+<td>2.14</td>
+<td>2.06</td>
+<td>1.80</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient3</td>
+<td>5.98</td>
+<td>5.91</td>
+<td>2.52</td>
+<td>2.64</td>
+<td>2.21</td>
+<td>1.42</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient4</td>
+<td>3.57</td>
+<td>3.51</td>
+<td>NaN</td>
+<td>2.44</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="problem-1-basic-sanity-check" class="level3">
+<h3 class="anchored" data-anchor-id="problem-1-basic-sanity-check">Problem 1: Basic sanity check</h3>
+<p>There is very little in terms of description of how the data analysis has been performed. This is what I can find in the paper.</p>
+<blockquote class="blockquote">
+<p>The median viral loads of nasopharyngeal and saliva samples from the 4 participants were 5.66 log copies/mL and 4.00 log copies/mL, respectively. The median viral loads after coughs without a mask, with a surgical mask, and with a cotton mask were 2.56 log copies/mL, 2.42 log copies/mL, and 1.85 log copies/mL, respectively.</p>
+</blockquote>
+<p>Unfortunately, if we try and reproduce those numbers we get something very different</p>
+<div id="cell-8" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">data_df.median().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>np_swab           5.70
+saliva_swab       3.90
+control_before    2.52
+control_after     2.54
+surgical_mask     2.21
+cotton_mask       1.84
+dtype: float64</code></pre>
+</div>
+</div>
+<p><strong>Solution: read the comments section</strong></p>
+<p>Reading the <a href="https://annals.org/aim/fullarticle/2764367/effectiveness-surgical-cotton-masks-blocking-sars-cov-2-controlled-comparison">comments section</a> of the paper, we discover that not only the authors meant mean, rather than median, but there is also a typo in the average control viral load. This is what they state the paragraph above should read:</p>
+<blockquote class="blockquote">
+<p>The mean viral loads of nasopharyngeal and saliva samples from 4 participants were 5.66 log copies/mL and 4.00 log copies/mL, respectively, when we did calculate not detectable values. The mean viral loads after coughs without a mask, with a surgical mask, and with a cotton mask were 2.65 log copies/mL, 2.42 log copies/mL, and 1.85 log copies/ml, respectively, when we did not calculate not detectable values</p>
+</blockquote>
+<p>If we check the mean rather than median, we get way closer numbers. I am still a bit uncertain about the saliva swabs mean viral load, but the other differences can definitely be attributed to rounding problems</p>
+<div id="cell-11" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">data_df.mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>np_swab           5.66
+saliva_swab       4.07
+control_before    2.73
+control_after     2.59
+surgical_mask     2.42
+cotton_mask       1.84
+dtype: float64</code></pre>
+</div>
+</div>
+<p>Taking the average of the two control means, we also get a number which is quite close to the stated control viral load.</p>
+<div id="cell-13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_control(df): <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>( df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'control_before'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'control_after'</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb6-2">get_control(data_df.mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)).mean()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>2.66</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always double check your numbers and do frequent sanity checks</p>
+</div>
+</div>
+</section>
+<section id="aside-median-or-mean" class="level3">
+<h3 class="anchored" data-anchor-id="aside-median-or-mean">Aside: Median or Mean?</h3>
+<p>Although after the authors’ corrections the topic is not strictly relevant to our analysis, how can we decide whether to pick the median or the mean as a centrality measure?</p>
+<p>The quick answer is that it is almost always a good idea to use the median rather than the mean, as it is way more robust to outliers (for a more detailed explanation you can check, for example, <a href="https://creativemaths.net/blog/median/">this post</a>). The reason why we tend to use the mean is that it is mathematically well behaved and efficient to compute, but nowadays we can get around that with brute computational power and get something which is more robust.</p>
+<p>The main exception to this rule is when you have very small samples, especially if you are measuring integers. The reason being that in this situation the median can jump around quite a bit. Let’s run a small experiment. Here is a population of 20,000 integeres normally distributed (with standard deviation 20) around a mean of 100.</p>
+<div id="cell-16" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">population <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.normal(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>().astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>)</span>
+<span id="cb8-2">plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb8-3">plt.hist(population, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>)[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb8-4">plt.axvline(population.mean(), color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'k'</span>, linestyle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/2020-05-07-masked-analyst_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we draw 1000 random samples of size 4 from the population, we can see that the medians of the samples are a bit more spread out than the means (and have a higher standard deviation). This means that picking the median we are more likely to make of being further away from the true population statistics.</p>
+<div id="cell-18" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">samples <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [np.random.choice(population, replace<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)]</span>
+<span id="cb9-2">medians <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [np.median(x) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> samples]</span>
+<span id="cb9-3">means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>  [np.mean(x) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> samples]</span>
+<span id="cb9-4"></span>
+<span id="cb9-5">plt.hist(means, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,  density<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.7</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'means std: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(np.std(means), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>)[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb9-6">plt.hist(medians, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, density<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.7</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'medians std: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(np.std(medians), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>)[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb9-7">plt.legend()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/2020-05-07-masked-analyst_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>prefer the median over the mean, except when dealing with very small samples of integers.</p>
+</div>
+</div>
+<p>In fact, this is exactly the situation of the paper we are looking at (the reason will be probably clearer when we get to the discussion on the units of viral loads).</p>
+</section>
+<section id="conclusions-of-the-paper" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions-of-the-paper">Conclusions (of the paper)</h3>
+<p>With those numbers we have seen above in mind, the authors reach the conclusion that surgical and cotton masks are not effective at controlling the spread of COVID-19:</p>
+<blockquote class="blockquote">
+<p>Neither surgical nor cotton masks effectively filtered SARS–CoV-2 during coughs by infected patients […] In conclusion, both surgical and cotton masks seem to be ineffective in preventing the dissemination of SARS–CoV-2 from the coughs of patients with COVID-19 to the environment and external mask surface.</p>
+</blockquote>
+<p>Although they do not specify any detail, we can see that the difference in percentage of the viral load with and without a mask is roughly 9% and 30% for surgical and cotton masks respectively, which seem to support that the conclusion that these kind of masks are barely useful.</p>
+<div id="cell-22" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_test(df): <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>(df[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'surgical_mask'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cotton_mask'</span>]])</span>
+<span id="cb10-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_difference(df, pct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>): </span>
+<span id="cb10-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (get_control(df) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> get_test(df).T) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> get_control(df) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> pct <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> (get_control(df) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> get_test(df).T)</span>
+<span id="cb10-4"></span>
+<span id="cb10-5">get_difference(data_df.mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>surgical_mask    0.090226
+cotton_mask      0.308271
+dtype: float64</code></pre>
+</div>
+</div>
+<p>End of the story then?</p>
+<p>Not exactly.</p>
+</section>
+<section id="problem-n.2-nd-na" class="level3">
+<h3 class="anchored" data-anchor-id="problem-n.2-nd-na">Problem n.2: ND != NA</h3>
+<p>As I am sure everybody who has dabbed a bit with data science knows, one of the common themes when doing exploratory data analysis and preparing your dataset is dealing (and inputing) missing values. There are different ways of dealing with them, but the most common ones are:</p>
+<ol type="1">
+<li>input some centrality measure to fill the missing values (normally you want to use the median for continuous variable and the mode for categorical values)</li>
+<li>build a predictive model to fill the gaps and use the predictions insted</li>
+<li>throw away the missing values altogether</li>
+</ol>
+<p>The last one is usually the safest option, and it is what we have done so far (when we computed the mean the default behaviour is simply ignore missing values), and I assume this is what the authors mean by</p>
+<blockquote class="blockquote">
+<p>when we did not calculate not detectable values</p>
+</blockquote>
+<p>If you check the table at the beginning of the post, though, you will see that <code>ND</code> stands, in fact, for “not detected”.</p>
+<p>The problem here is that “not detected” does not mean that the value is missing: it means that it is too low for us to measure it. This means, in principle, that, depending on how sensitive the measure is, it could be anywhere between 0 and 1.42 (which is the smallest value measured in the table).</p>
+<p>Let’s see what happens if we consider 1.41, which is the most conservative value for the detectability threshold.</p>
+<div id="cell-25" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>).mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) </span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>np_swab           5.66
+saliva_swab       4.07
+control_before    2.40
+control_after     2.59
+surgical_mask     2.17
+cotton_mask       1.63
+dtype: float64</code></pre>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">get_control(data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>).mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>2.495</code></pre>
+</div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">get_difference(data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>).mean().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>surgical_mask    0.130261
+cotton_mask      0.346693
+dtype: float64</code></pre>
+</div>
+</div>
+<p>As we can see, even if the end result still seems to indicate that cotton and surgical masks are not particularly effective at source control, the numbers (especially for surgical masks) have changed quite a bit.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>pay particular attention at the semantics of unusual values. This includes missing values and outliers (for example, it is not uncommon to use “magic” dates or numbers to indicate a missing value or something specific about a piece of data). If you do not, it might completely throw off your analysis</p>
+</div>
+</div>
+</section>
+<section id="problem-n.3-wrong-test" class="level3">
+<h3 class="anchored" data-anchor-id="problem-n.3-wrong-test">Problem n.3: wrong test</h3>
+<p>Another problem of the approach we have used so far is that the authors are (presumably) comparing the average viral loads of the same group with and without the masks. This (i.e.&nbsp;evaluating the differences of the averages) is the same as considering the test and control groups as independent, which is certainly not the case here as it’s the same patients being used as test and control groups. A more appropriate idea is to instead consider the differences with and without the masks for each patient independently and then averaging those differences. <em>In other words, it is better to compute the mean of the differences rather than the difference of the mean</em>. This is particularly important when there is a lot of variance in your test population. It is hard to tell in this case, but looking at the characteristic of the patients, they are far from a homogeneous group. Furthermore, there is really no reason not to use the appropriate test, so let’s see what happens.</p>
+<div id="cell-32" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">get_difference(data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>)).T</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">surgical_mask</th>
+<th data-quarto-table-cell-role="th">cotton_mask</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient1</td>
+<td>0.035503</td>
+<td>0.328402</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient2</td>
+<td>0.142857</td>
+<td>0.328571</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient3</td>
+<td>0.143411</td>
+<td>0.449612</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient4</td>
+<td>0.267532</td>
+<td>0.267532</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-33" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">get_difference(data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>)).T.mean()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>surgical_mask    0.147326
+cotton_mask      0.343530
+dtype: float64</code></pre>
+</div>
+</div>
+<p>In this case not much has changed (except that surgical masks look slightly better than before).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>check your assumptions of indpendence betweeen the test and control groups (you have a test and control group, right?)</p>
+</div>
+</div>
+</section>
+<section id="huge-problem-n.4-watch-your-logs" class="level3">
+<h3 class="anchored" data-anchor-id="huge-problem-n.4-watch-your-logs">Huge Problem n.4: watch your logs!</h3>
+<p>If we look carefully at the data table from the paper, we notice that there is no unit to tell us what are the numbers we are measuring. This can be found in the text though (and it is probably obvious to anyone who is used to deal with viral loads):</p>
+<blockquote class="blockquote">
+<p>The median viral loads of nasopharyngeal and saliva samples from the 4 participants were 5.66 log copies/mL and 4.00 log copies/mL, respectively.</p>
+</blockquote>
+<p>Here we notice a red flag: <code>log copies/mL</code> seems to indicate that we are dealing with a logarithmic scale. A quick googling can confirm that: those numbers are the base 10 logarithm of the number of viral copies per milliliter. This is quite common when you are dealing with concentrations (the same thing happens, for example with <a href="https://en.wikipedia.org/wiki/PH">pH</a>, which is a measure of concentration of ions) as the numbers tend to be quite large and we are more interested in the <em>order of magnitude</em> rather than the magnitude (i.e.&nbsp;the actual numbers) itself.</p>
+<p>This causes a massive problem, though: when we take the mean of two logarithms, we are actually taking the <a href="https://en.wikipedia.org/wiki/Geometric_mean">geometric mean</a> of the underlying quantities, and if we consider the difference of two logarithms, we are actually looking at the ratio of the quantities.</p>
+<p>Just in case you need a reminder for the properties of logarithms, what we are saying is that:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20(%5Clog%20x%20+%20%5Clog%20y)%20/%202%20=%20%5Clog%20%7B%20%5Csqrt%20%7Bxy%7D%20%7D%20"></p>
+<p>How big of a problem this is?</p>
+<p>Consider this: a difference between two viral loads of 1 log copies/mL means that the larger load contains <em>10 times</em> more viral particles than the smaller ones. If the two viral loads were 3 and 4 log copies/mL we would be treating a 90% difference as if it were a 25% difference. And if the two viral loads are 9 and 10 log copies/mL, we would be treating a 90% difference as if it were a 10% difference!</p>
+<p>As a mathematician, my instinct would be to rewrite the formulas using the properties of the logarithms (which can be a pain or not necessarily possible), but in fact, especially when the range of values is relatively small, the easiest way to proceed is to “unroll” the logarithms and redo our computations with the actual quantities:</p>
+<div id="cell-38" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">get_difference((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>)), pct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).T</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">surgical_mask</th>
+<th data-quarto-table-cell-role="th">cotton_mask</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient1</td>
+<td>723.641748</td>
+<td>2357.133893</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient2</td>
+<td>63.331160</td>
+<td>100.722936</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient3</td>
+<td>221.642467</td>
+<td>357.520797</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient4</td>
+<td>124.859456</td>
+<td>124.859456</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-39" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">get_difference((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>)), pct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).T.mean()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>surgical_mask    283.368708
+cotton_mask      735.059271
+dtype: float64</code></pre>
+</div>
+</div>
+<p>These are the average number of viral particles filtered. How does this compare with the numbers computed before we unrolled the logarithms? It’s roughly 100 times larger.</p>
+<div id="cell-41" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> get_difference(data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>), pct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).T.mean()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>surgical_mask    2.119581
+cotton_mask      7.391796
+dtype: float64</code></pre>
+</div>
+</div>
+<p>So, all in al,l once we have fixed all the problems these are the filtering powers of surgical and cotton masks under our (conservative) look like this:</p>
+<div id="cell-43" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">get_difference((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>)), pct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>).T.mean()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>surgical_mask    0.548049
+cotton_mask      0.871057
+dtype: float64</code></pre>
+</div>
+</div>
+<p>This is a very different result from what we have obtained above as it seems to suggest that cotton masks are actually quite good at reducing the viral load spread (and remember that we are talking about coughing and being 20 cm apart, in reality this might have huge impact on the effectivness of social distancing).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>always check the units and be very cautious when using a logarithmic quantity. Try to “unroll” the log before doing your computations if the range is not too large.</p>
+</div>
+</div>
+<p>So far I hope you are convinced that the conclusions reached in the paper is, at the very least, not that clear cut (and if you ask me in fact it’s the exact opposite of what the data is actually saying).</p>
+<p>But let’s address a further criticism that is very often used to dismiss small studies.</p>
+</section>
+<section id="statistical-significance" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-significance">Statistical significance</h3>
+<p>“Surely an experiment with <code>N = 4</code> is not statistically significant” or something along those lines is a sentence that I hear far too often when evaluating the effort needed to measure an imporant quantity. Well, it turns out that until you start designing experiments and actually look at the numbers, we don’t really have an intuitive feel for sample sizes.</p>
+<p>Let’s see what we can do here. The first and most important problem we have is that the objective of the study is actually not well defined.</p>
+<blockquote class="blockquote">
+<p>To evaluate the effectiveness of surgical and cotton masks in filtering SARS–CoV-2.</p>
+</blockquote>
+<p>As data people we should always make sure that the question we are trying to answer is well defined from a quantitative point of view, and this particular one is not (what does “effective” means in this context)? Furhtermore, the experiment is, not designed to test how effective masks are, for example, at filtering the virus in case of people, talking, or sneezing, or even just breathing, which would be interesting for advising policies in this case.</p>
+<p>Keeping in mind that we are deviating from the original objective of the study, let’s see if we can formulate some question that we can try and answer with the data available.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>let me state this clearly. In general, fishing for questions <em>after</em> the experiment is a <strong>very bad idea</strong> and it is not how you design an experiment. This is just an exercise in measuring what can be achieved with small samples and would give us a good idea of how to design a proper study</p>
+</div>
+</div>
+<p>These are (by patient) the reductions of viral loads in percentage between our test and control conditions:</p>
+<div id="cell-51" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">eff_pcts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_difference((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>))).T <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> eff_pcts</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">surgical_mask</th>
+<th data-quarto-table-cell-role="th">cotton_mask</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient1</td>
+<td>0.284524</td>
+<td>0.926786</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient2</td>
+<td>0.500931</td>
+<td>0.796689</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">patient3</td>
+<td>0.577459</td>
+<td>0.931472</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">patient4</td>
+<td>0.829282</td>
+<td>0.829282</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Let’s start with a very simple question: are masks better than nothing at reducing the viral load (under the test conditions)?</p>
+<p>To appease the frequentist readers, let’s do a very basic <a href="https://en.wikipedia.org/wiki/Student%27s_t-test">t-test</a>. We will do it by hand, rather than using a specific library, except for the computation of the critical thresholds.</p>
+<p>Our question translates into “is the filtered percentage of the viral load statistically greater than 0?” Here is is how we compute the t stats.</p>
+<div id="cell-53" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1">means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eff_pcts.mean()</span>
+<span id="cb29-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### Notice: this is the standard error for N = 4</span></span>
+<span id="cb29-3">std_errors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eff_pcts.std() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb29-4">t_stats <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std_errors</span></code></pre></div>
+</div>
+<p>We use <code>scipy</code> to find the critical thresholds for <img src="https://latex.codecogs.com/png.latex?%5Calpha"> at 0.0625, 0.05, 0.01, and 0.005. In other word we compute the value above which the t-stats need to be in order for the p-value to be below the different <img src="https://latex.codecogs.com/png.latex?%5Calpha"> levels and for us to reject the null hypothesis that the test condition is not better than the control condition.</p>
+<p>Why and whether this is a good idea is a very long and out of scope discussion, but this is a classical and radicated method of testing hypothesis. Except for the 0.0625 one which I will explain later, the values of <img src="https://latex.codecogs.com/png.latex?%5Calpha"> are some of the commonly used ones in science, with 0.05 being by far the most common.</p>
+<div id="cell-55" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> scipy.stats.distributions <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> t</span>
+<span id="cb30-2">αs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0625</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.05</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.005</span>]</span>
+<span id="cb30-3">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb30-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> α <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> αs: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>(α) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>ppf(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> α, df)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6.25%: 2.113086729236424
+5.0%: 2.3533634348018264
+1.0%: 4.540702858698419
+0.5%: 5.84090929975643</code></pre>
+</div>
+</div>
+<p>So are the t statistics higher than those values? Let’s see</p>
+<div id="cell-57" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1">t_stats</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>surgical_mask     4.875605
+cotton_mask      25.473360
+dtype: float64</code></pre>
+</div>
+</div>
+<p>It turns out that both cotton and surgical masks are better than no mask in a strongly statistically significant way. Cotton masks in particular have a p-value which is way lower than the strictest normally used significance thresholds.</p>
+<p>In retrospect, though, the results is not surprising: given what we know about the virus transmission it is (or should be) common sense that putting a physical barrier in front of your mount will filter at least minimally better than not putting it. And in fact I claim that this should have been our null hypothesis in the first place, but let’s not delve into that. Let’s assume that in order for masks to be effective, they need to be filtering at least 80% of the viral load. Can we say that?</p>
+<div id="cell-59" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1">means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (eff_pcts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.8</span>).mean()</span>
+<span id="cb34-2">std_errors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eff_pcts.std() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb34-3"></span>
+<span id="cb34-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Let's directly see the p-vaues rather than the t-stats</span></span>
+<span id="cb34-5">(means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std_errors).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t.cdf(x, df<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>surgical_mask    0.944593
+cotton_mask      0.064624
+dtype: float64</code></pre>
+</div>
+</div>
+<p>Not surprisingly, the answer is a resounding no for surgical masks (but at this point they were not even in the game anymore).</p>
+<p>What about cotton masks? We have a p-value of 6.5%. This is above all the thresholds so in principle we cannot reject the null hypothesis, but it would be considered “at the border of significance” if we were to submit a paper.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Even a very small sample can be statistically significant. In fact samples that are too large might have worse descriptive power, as they might amplify any sampling bias we have.</p>
+</div>
+</div>
+<p>Let’s think for a second about the values we have just seen. A p-value of 6.5% means that the average cotton mask could, in principle, not have a filtering power better than 80% as the p-value is not lower than the accepted 0.05 threshold (or any of the other thresholds we have looked at, for that matters).</p>
+<p>So we should not advice wearing cotton masks, right? Well not so fast: the p-value can be thought as the fals positive rate. This means that if we see an effect (like we do in this case, as the average in our sample is over 80%) the p-value is the probability of that effect being a statistical fluke. In other words, there is a 93.5% probability that the effect we are seeing (the average filtering power is higher than 80%) is real.</p>
+<p>Is this enough? It depends. In particular it depends on the cost of making a mistake. In most business cases, and when the cost of getting that wrong is very low, we can accept a false positive risk way higher than the standard 5% used in science.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is nothing magic about the 5% statistical significance threshold. If you are doing hypothesis testing, pick a threshold that makes sense from a business perspective and consider the costs of making a mistake.</p>
+</div>
+</div>
+<p>Let’s do one last test before looking at a different trick. The question we want to answer is: are the averages filtering power of masks significantly better than the lowest values we have observed (with a weird significance threshold of 6.25%)?</p>
+<div id="cell-65" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (eff_pcts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> eff_pcts.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>()).mean()</span>
+<span id="cb36-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### Notice: this is the standard error for N = 4</span></span>
+<span id="cb36-3">std_errors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eff_pcts.std() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb36-4">t_stats <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std_errors</span>
+<span id="cb36-5">cohen_d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t_stats <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb36-6">t_stats.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t.cdf(x, df<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>surgical_mask    0.050409
+cotton_mask      0.058960
+dtype: float64</code></pre>
+</div>
+</div>
+<p>Under this conditions we can reject the null hypothesis, so we can tell that the mean filtering power higher than the smallest number observed with a probability of at least 93.75% (1 - <img src="https://latex.codecogs.com/png.latex?%5Calpha">). Let’s keep this in mind and see as later we will compare it to another technique.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>doing multiple experiments with the same observations and the same <img src="https://latex.codecogs.com/png.latex?%5Calpha"> values is in general a very <a href="https://xkcd.com/882/">bad idea</a>. Normally we would need to apply something like the <a href="https://en.wikipedia.org/wiki/Bonferroni_correction">Bonferroni correction</a> or similar tricks. In this case, though, we are not really doing multiple experiments, but rather checking the same thing with different thresholds and probing for statistical significance, which we could have done analytically in a single go. In any case, please always be extra cautious with p-values.</p>
+</div>
+</div>
+</section>
+<section id="a-touch-of-bayes" class="level3">
+<h3 class="anchored" data-anchor-id="a-touch-of-bayes">A touch of Bayes</h3>
+<p>Hypothesis testing is all fun and good, but what if we wanted to answer a question like “how much viral load on average a cotton mask filters”?</p>
+<p>At this point we are out of the world of yes/no questions and we are into the world of measurement. In a certain Bayesian way of thinking, we could say that measuring something means reducing our uncertainty about the real value of that something. A good measurement consists in a range of possible values for the things we are measuring (since no measurement is without error) and a probability of the measured value to fall into that range. Essentially, the smaller the range (everything else being the same), the less our uncertainty. Measuring something, thus, means reducing the range of values we are confident enough our true value falls into.</p>
+<p>One often overlooked aspect of measuring stuff (that with this very broad definition might also mean producing a report) is that each measurement has cost attached and a steeply diminishing value.</p>
+<p>For example, it is extremely easy to measure my height with a .5 meters precision. Still easy with a 10 cm precision. Reasonably doable within a 1 cm. Virtually impossible and probably very expensive within a 1 <img src="https://latex.codecogs.com/png.latex?%5Cmu%20m">. Not to mention completely useless.</p>
+<p>For this very reason, when we have a lot of uncertainty about a certain quantity, a very small number of measurement can take us a very long way.</p>
+<p>In this perspective, since a priori we know nothing about the actual value of the filtering power of cotton masks for viral loads of SARS–CoV-2, we can expect to gain a lot of insight even with the very small number of measurments we have.</p>
+<p>Let’s see this in practice. This is what we have measured (with the conservative assumption we are keeping about non detectable values).</p>
+<div id="cell-69" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1">eff_pcts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_difference((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> data_df.fillna(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.41</span>))).T.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cotton_mask'</span>)</span>
+<span id="cb38-2">eff_pcts.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cotton_mask'</span>).cotton_mask</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>patient2    0.796689
+patient4    0.829282
+patient1    0.926786
+patient3    0.931472
+Name: cotton_mask, dtype: float64</code></pre>
+</div>
+</div>
+<p>Once again, although it is not evident, “how much viral load on average a cotton mask filters” is not particularly well defined from a quantitative point of view. Let’s rephrase it as “what is the median percentage of virus load filtered by cotton masks?”.</p>
+<p>Now, that’s different. One of the hidden assumptions that we used during our hypotheses testing, which is almost inescapable, is that the sample we chose is not biased. In other words, we assume have selected our patients at random. This is essentially never true, and the bigger the sample, the worst the bias will be, but for the sake of argument, let’s assume that the effect of sampling bias is negligible. In this case each measurement has a 50% probability of being below the median (by definition of median itself). With a bit of combinatorics, we can compute the probability of being higher than our highest measured value, our second highest value and so on.</p>
+<div id="cell-71" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1">np.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>]).cumsum()[:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>array([0.0625, 0.3125, 0.6875, 0.9375])</code></pre>
+</div>
+</div>
+<p>What we are saying is that the median filtering power of cotton masks has a 6.25% chance of being above 93%, a 31.25% of being above 92.7%, etc.</p>
+<p>In other word, with only 4 values we can assert that the median is higher than the smallest measured value with 93.75% probability. And this is true no matter how the values of filtering powers are distributed.</p>
+<p>If we add some very common assumptions that we have used under the hood in our t-tests (namely that the median and the mean are the same), we can say exactly the same for the mean.</p>
+<p>The combinatorics behind it are beyond the scope of this post (but not complicated), but as a general rule, if we sample (measure) N values from <em>any</em> distribution, the probability that the median of the population (i.e.&nbsp;the “real” median) is higher than the smallest value we have measured is <img src="https://latex.codecogs.com/png.latex?%201%20-%20%5Cfrac%20%7B1%7D%20%7B2%20%5E%20N%7D"></p>
+<p>Notice that this is very close to the result we have obtained with the last t-test (so I hope now you understand the <img src="https://latex.codecogs.com/png.latex?%5Calpha"> value of 0.0625), but is stronger, since it is making fewer assumptions on the population and it only requires (at most) pen and paper and a quick calculation.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>when uncertainty is large, you can get a lot of mileage from a very small sample.</p>
+</div>
+</div>
+</section>
+<section id="quick-power-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="quick-power-analysis">Quick power analysis</h3>
+<p>There is one last aspect that we have not eviscerated yet. Let’s consider once again our t-test of significance for cotton masks being more than 80% effective on average.</p>
+<p>We already know that the p-value is above the <img src="https://latex.codecogs.com/png.latex?%5Calpha"> value of 0.05, so we cannot reject the null hypothesis. But does this mean that we have to reject the test hypotesis?</p>
+<p>This is where the power come into play (or rather 1 minus the statistical power of the experiment).</p>
+<p>Like <img src="https://latex.codecogs.com/png.latex?%5Calpha"> is the acceptable risk of a false positive, there is an analogous <img src="https://latex.codecogs.com/png.latex?%5Cbeta">, which is the acceptable risk of a false negative. For some arbitrary historical reason, like we usually consider <img src="https://latex.codecogs.com/png.latex?%5Calpha"> to be 0.05, we consider <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> to be 0.2. So the usually acceptable power of an experiment tends to be chosen as 1 - <img src="https://latex.codecogs.com/png.latex?%5Cbeta">, or 0.8. This means that <em>in case we cannot reject the null hypothesis</em> we want the probability of the null hypothesis being true at least 80%.</p>
+<p>The statistical power is not easy to compute manually, but can it done analytically for a t-test, so we will use the <code>statsmodels</code> library to do so. This works allows us to fix 3 values among power, the number of observations (the parameter <code>nobs</code>), the chosen <img src="https://latex.codecogs.com/png.latex?%5Calpha"> and the effect size (long story short, in the case of the t-test is the t statistic divided by the square root of the number of observations) in order to obtain the remaining one.</p>
+<p>What’s the power of our t-test?</p>
+<div id="cell-76" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1">means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (eff_pcts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.8</span>).mean()</span>
+<span id="cb42-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### Notice: this is the standard error for N = 4</span></span>
+<span id="cb42-3">std_errors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eff_pcts.std() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb42-4">t_stats <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> means <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std_errors</span>
+<span id="cb42-5">cohen_d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t_stats <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb42-6">t_stats.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t.cdf(x, df<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df))</span>
+<span id="cb42-7"></span>
+<span id="cb42-8"></span>
+<span id="cb42-9"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> statsmodels.stats.power <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> TTestPower</span>
+<span id="cb42-10">TTestPower().solve_power(effect_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cohen_d.cotton_mask, power<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, </span>
+<span id="cb42-11">                             nobs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.05</span>, alternative<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'larger'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>0.48376788050332065</code></pre>
+</div>
+</div>
+<p>A power of 48.4% (way below the acceptable 80% threshold) means that although we cannot reject the null hypothesis, there is still a 52% risk of being in presence of a false negative, which is not acceptable. So we cannot formally reject the test hypothesis either.</p>
+<p>We have gained a new piece of information with our experiment, though: we are now able to guess the expected effect size if we were to repeat the experiment. And we can plug this into the power analysis to find out how many patients do we need to test in order to have an acceptable statistical power and confidence.</p>
+<div id="cell-78" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1">TTestPower().solve_power(effect_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cohen_d.cotton_mask, power<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.8</span>, </span>
+<span id="cb44-2">                             nobs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.05</span>, alternative<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'larger'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>7.284382863086592</code></pre>
+</div>
+</div>
+<p>What this is telling us is that the difference between what we have observed for cotton masks and a filtering power of 80% of the viral load is so strong that we only need 8 people to design a new experiment that would give us a reasonable opportunity of either rejecting the null hypothesis with 95% oconfidence or rejecting the test hypothesis with 80% confidence.</p>
+<p>As menitoned above: we tend not to have a good intuition of what good sample sizes are.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>a very small and potentially quick study can help a lot in designing a proper statistically sound experiment. This is particularly useful for A/B testing, for example</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <category>covid19</category>
+  <guid>https://datacasual.com/posts/2020-05-07-masked-analyst.html</guid>
+  <pubDate>Wed, 06 May 2020 23:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Palle cubiche (minipost)</title>
   <link>https://datacasual.com/posts/2020-05-06-palle-cubiche.html</link>
   <description><![CDATA[ 
