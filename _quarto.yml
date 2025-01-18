@@ -3,10 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "Datacasual - Tales of an accidental data scientist"
+  title: "Datacasual"
+  site-url: https://datacasual.com/
+  description: "Tales of an accidental data scientist"
   navbar:
     right:
       - about.qmd
+      - icon: rss
+        href: index.xml
       - text: "![](posts/images/bsky.svg){width=16}"
         href: https://bsky.app/profile/doctormiko.bsky.social
       - icon: github

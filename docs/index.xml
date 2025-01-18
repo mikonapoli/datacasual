@@ -1,0 +1,1600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Datacasual</title>
+<link>https://datacasual.com/</link>
+<atom:link href="https://datacasual.com/index.xml" rel="self" type="application/rss+xml"/>
+<description>Tales of an accidental data scientist</description>
+<generator>quarto-1.6.40</generator>
+<lastBuildDate>Tue, 02 Jun 2020 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Fundamentals of Data Visualisation</title>
+  <link>https://datacasual.com/posts/2020-06-03-data-vis-fundamentals.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Visualising data is all too often an overlooked skill of data people, especially by the data scientist/machine learning engineer fraction of the population.</p>
+<p>This is somewhat similar to what happens with the front end/back end divide in software engineering. Just as I don’t believe in true full stack engineers, because the amount of tools and speed at which they evolve is simply too much for a single person to master at the same time, I don’t believe that it is reasonable to expect a <a href="https://en.wikipedia.org/wiki/Unicorn">single data professional</a> to be an expert in all the aspects of the data process.</p>
+<p>At the same time, I do believe that software engineers who can cover the fundamentals of full stack development while maintaing a deeper expertise in some aspect or another exist, and I call them good software engineers. In the same fashion, I think that good data professionals should have a good working understanding of all the steps of the data process no matter whether they are generalists or hyper specialised.</p>
+<p>This is especially true for data visualisation as it is fundamental in at least two very distinct stages at the opposite ends of the data process, so I believe it is very relevant to all data professionals.</p>
+<section id="exploratory-data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+<p>When we first look at our data, looking for patterns, and trying to spot problems, it is important to be able to observe our data from all angles.</p>
+<p>Data visualisation is a powerful tool to grasp multidimensional information. In simpler words, it is a way of squeezing a lot of data into a container small enough for our brain to appreciate and spot the patterns. As they say “a picture is worth a thousand data points”.</p>
+<p>Summary statistics and centrality measures can serve the same functions, but they are rarely enough, unless we can afford to make a lot of assumptions on about the shape of our data.</p>
+<p>Furthermore, summary statistics can easily hide problem.</p>
+<p>Let’s look at one quick example.</p>
+<p>A <a href="https://www.autodeskresearch.com/sites/default/files/The%20Datasaurus%20Dozen.zip">simple dataset</a> is composed of two numerical variables (X and Y) with the following statistics:</p>
+<pre><code>Mean of X = 54.26
+Mean of Y = 47.83
+Standard deviation of X = 16.76
+Standard deviation of Y = 26.93
+Correlation = -0.06</code></pre>
+<p>Just looking at this numbers, the dataset looks utterly uninteresting, but this is what the dataset looks like as a scatterplot:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://3.bp.blogspot.com/-dYWcbKVsiGY/V8RFmMFnLjI/AAAAAAAAG9Y/Qr_PGmR0V8MhSXb8-rBdAsdciny-oql2ACLcB/s1600/1datasaurus.png" class="img-fluid figure-img"></p>
+<figcaption>The datasaurus</figcaption>
+</figure>
+</div>
+<p>Just to push the point further, these are a series of datasets that have all <em>exactly the same statistics</em>, but as you can see look very different.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2w5cDJtdHBwb2JwYXhkZXpva3FjYjY1MmV1YjY2NTVrdW9yMG44ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sTLW3CGIjnZdyoieoU/giphy.gif" class="img-fluid figure-img"></p>
+<figcaption>The datasaurus dozen</figcaption>
+</figure>
+</div>
+<p>If you want to learn more about <a href="http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html">the datasaurus origin</a> and its evolution into a “datasaurus dozen” (notice that we are actually looking at 13 different datasets), have a look at this <a href="https://www.autodeskresearch.com/publications/samestats">excellent article</a>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always take a look at your data. Summary statistics are not enough, especially at the very first stages of your exploration.</p>
+</div>
+</div>
+</section>
+<section id="communicating-results" class="level3">
+<h3 class="anchored" data-anchor-id="communicating-results">Communicating results</h3>
+<p>The ultimate goal of using data, so the very essence of the job of a data professional, is to inform decisions with what the data is telling us. No matter what amazing insight we have gained from our data, if we are not able to communicate it, it will be worthless. Even worse, if the insights are incorrectly communicated, they might create more damage than if they hadn’t been spotted at all.</p>
+<p>Good data visualisations help conveying a message, since they can reduce the noise and focus the attention on whatever insight the author of the visualisation is trying to communicate.</p>
+<p>Exploratory data analysis is a huge topic in itself, so here I want focus on this step, the communication of insights, and will look at what I consider three fundamental rules to pay attention to.</p>
+</section>
+<section id="rule-n.1-start-with-why-and-who" class="level2">
+<h2 class="anchored" data-anchor-id="rule-n.1-start-with-why-and-who">Rule n.1: Start with why, and who</h2>
+<p>This is really the first rule of any kind of presentation, not only data visualisation.</p>
+<p>Data visualisation is not (or should not be) a pretty picture for its own sake: it is made to communicate something to someone. It is fundamental when creating visualisations to start and always keep in mind both the message and the intended audiance.</p>
+<p>A good exercise is to explicitly articulate <em>why</em> the visualisation is being made before actually building it. It is very unlikely we will be able to convey a message we are not able to articulate to ourselves.</p>
+<p>Even if the message is extremely clear, there is no single way of building a visualisation. Context and audience matter. A lot.</p>
+<section id="a-cautionary-tale" class="level3">
+<h3 class="anchored" data-anchor-id="a-cautionary-tale">A cautionary tale</h3>
+<p>On the morning of the 27 of January 1986, NASA managers of the Marshall Space Center were having a teleconference to address concerns about a Shuttle launch that had been rescheduled from that morning to the next day because of weather issues.</p>
+<p>Among other things, they were addressing concerns that the engineering team at Morton Thiokol Inc., the company that had produced the solid rocket boosters of the Shuttle, had about the effects that the cold temperatures forecasted for the next day might have on the O-Rings of the boosters.</p>
+<p>The engineers at MTI presented this chart to illustrate their concerns on the topic:</p>
+<p><img src="https://p4a.seas.gwu.edu/2019-Fall/images/rockets_chart.png" class="img-fluid"></p>
+<p>At the time NASA hadn’t been recommended anything explicitely (this would happen later in the afternoon), as per later testimonies, they were just “looking at the engineering data”, so they decided that those concerns were negligible and went ahead with the launch.</p>
+<p>The next day the Challenger launched as scheduled.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Challenger_breakup.jpg" class="img-fluid"></p>
+<p>Although it has been speculated, it is probably not the case that the low temperature has been the main cause of the disaster, so it’s an exaggeration to say that bad data visualisation has destroyed the Challenger, but it is quite clear that the chart above does not bring the message across.</p>
+<p>There are a number of capital mistakes, but to stay on topic of rule n.1, if you want to show the risk of damage to the O-Rings deriving from low temperatures, then:</p>
+<ul>
+<li>Don’t make the temperature hard to read: that’s the main reason you are making this visualisation</li>
+<li>Don’t hide the legend that clarifies the damage to the O-rings in another slide: you are hiding your message</li>
+<li>Don’t sort by time: it’s irrelevant here, and it is shifting the attention from the message you are trying to convey</li>
+</ul>
+<p>And on the topic of “know your audience”: that chart has been prepared to be shown to NASA management deciding on the safety of a launch, not on a magazine for the general public, you really don’t need all those rockets boosters pictures.</p>
+<p>As <a href="https://www.edwardtufte.com/tufte/">Tufte</a> (famous statistician and data vis expert) has possibly overemphasized, the message “low temperatures can damage the o-rings more than we feel confortable with” might have been better served by something like this</p>
+<p><img src="https://project-orion-production.s3.amazonaws.com/uploads/content_picture/2928/VEp45_ring_damage2.jpg" class="img-fluid"></p>
+<p>(Image coming from <a href="https://stanfordmag.org/contents/elemental-evidence">this</a> Stanford magazine article)</p>
+<p>Whatever the correct way of displaying the message is, in the original chart you can spot a huge red flag in the lower left corner, that reads:</p>
+<blockquote class="blockquote">
+<p>Information on this page was prepared to support an oral presentation and cannot be considered complete without the oral discussion</p>
+</blockquote>
+<p>Whenever you spot a warning of this kind, it is often a sign that the authors don’t feel confident about their presentation or data visualisation or don’t want to assume responsability for that. Try not to be that author.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure your data visualisations can stand on their legs and can convey the intended message to the intended audience.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="rule-n.2-dont-lie" class="level2">
+<h2 class="anchored" data-anchor-id="rule-n.2-dont-lie">Rule n.2: Don’t lie</h2>
+<p>Since any single element of a data visualisation explictly or implicitly carries meaning, there are also countless possibilities of lying with it.</p>
+<p>When I say “lying”, I mean it in a broad “creating a wrong interpretation of the data in the audience” kind of way, as it does not need to be intentional.</p>
+<p>Since every data visualisation should have a clear message and intended audience, there are a number of ways of distorting that message.</p>
+<p>Rather than talking in abstract about how not to lie, I find more useful to look at examples of lying charts. Whether the author intended to do that or not.</p>
+<section id="a-menagerie-of-lying-charts" class="level3">
+<h3 class="anchored" data-anchor-id="a-menagerie-of-lying-charts">A menagerie of lying charts</h3>
+<section id="lying-with-data-and-scales" class="level4">
+<h4 class="anchored" data-anchor-id="lying-with-data-and-scales">Lying with data and scales</h4>
+<p>The first and most obvious way of lying with a data visualisation is by manipulating or omitting the data itself. Take a look at the following graph, that shows how the pollution has dropped since a certain party has taken power (the country and party are not important in this context).</p>
+<p><img src="https://66.media.tumblr.com/c01ef9df471b304365ce816879ddeb0e/tumblr_q0iinylpaJ1sgh0voo1_1280.png" class="img-fluid"></p>
+<p>Of course a distracted voter would not notice that three years (when pollution actually went up) are missing from the chart.</p>
+<p>Also notice that the same chart pulls the old trick of “let’s remove the 0 from the y axis so that a 2% change looks like a reduction of more than 50%”. Two lies for one.</p>
+<p>As I said, lying with charts does not need to be intentional: speaking of y axes and scales, you can also err in the opposite direction, by being too honest and mixing quantities that should not be on the same scale.</p>
+<p><img src="https://66.media.tumblr.com/7fbfeacf7649b5d16ad4e938c040a6b1/tumblr_p79fyvl1id1sgh0voo1_1280.jpg" class="img-fluid"></p>
+<p>The result is a chart that is technically correct, but does not convey any useful information (at least for what concerns the temperature).</p>
+</section>
+<section id="lying-with-mappings-and-aesthetics" class="level4">
+<h4 class="anchored" data-anchor-id="lying-with-mappings-and-aesthetics">Lying with mappings and aesthetics</h4>
+<p>Next on our list are the so called “mappings”, i.e.&nbsp;the way we project dimensions of our data (the features, if you will) onto the characteristic of the graphical objects of the chart (the “aesthetics”).</p>
+<p>As usual, this can be clumsy/unintentional, like mapping an ordinal variable like binned years onto a non gradient color palette of a stacked bar chart, resulting in a chart that is definitely not easy to read (at least in the temporal dimension):</p>
+<p><img src="https://66.media.tumblr.com/367956f1a6cfaf7fdb06a1d76eed7083/tumblr_puxyfcMDHr1sgh0voo1_1280.png" class="img-fluid"></p>
+<p>Or it can be absolutely blatant, like using a bar chart and implying a mapping that is not there, pretending that the mapped feature is represented by the height of the bars (which is clearly not the case)</p>
+<p><img src="https://66.media.tumblr.com/c22b3d1242d4e11feea984bba7e1c9e5/tumblr_peu9q9gFzJ1sgh0voo1_1280.png" class="img-fluid"></p>
+<p>Or it can be more sneaky, like mapping an ordinal variable onto an ordinal aesthetic (the position on the x axis), but sorting it according to something else, effectively treating an ordinal variable like a categorical, non ordered, one. Notice how the days on the x axis are not in chronological order, to make a decreasing trend appear out of thin air.</p>
+<p><img src="https://66.media.tumblr.com/9da9ffe50c7ce21cce174d268acfb048/tumblr_qa67ofwBML1sgh0voo1_1280.jpg" class="img-fluid"></p>
+<p>One of the most common way of lying with aestetics, which is mostly uninententional, is to use the wrong colours. Picking the right colours for your data visualisation is no easy task, but one rule of thumb is: never use the rainbow colour palette.</p>
+<p>There are a lot of reasons for this, but the summary is that it has unintuitive hues shift (and we subconsciously associate meanings to colours) and that it can have similar hues for values that are actually far away on the scale. As an example, look how similar the pink and red hues (which are at the opposite ends of the scale) are in the following chart.</p>
+<p><img src="https://www.poynter.org/wp-content/uploads/2013/09/L5_Figure12.jpg" class="img-fluid"></p>
+</section>
+<section id="lying-with-geoms" class="level4">
+<h4 class="anchored" data-anchor-id="lying-with-geoms">Lying with geoms</h4>
+<p>Next element that can be used to make a lying data visualisation is the choice of geometric object (or “geom”, in the language of the <a href="https://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf">grammar of graphics</a>). By far the most common offender is the use of a pie chart (or even worse, a donut chart) for categorical variables with a lot of categories.</p>
+<p><img src="https://66.media.tumblr.com/374ff02f40370889bea889eef62a14d9/tumblr_pzboikcYPx1sgh0voo1_1280.png" class="img-fluid"></p>
+<p>Although there is some controversy on this point, the reason why pie chart should be avoided is that they use angles to represent quantities, and the human eye is very bad at estimating angles. This problem is exacerbated with donut charts, where the missing central circle makes understanding the quantities even harder. In general, a pie chart should only be used for no more than 2-3 categories, when the quantities are very different and the actual numbers are explicitly presented or only a rough comparison is needed (and as said before: your visualisation should be able to stand on its legs, having to write down the actual data is a red flag). Dount charts and gauges should only be considered eye candy for raw values.</p>
+<p>On the other hand, if you really want to make it nigh impossible to evaluate quantities, using a 3D pie chart is a great ways to distort the sizes of the slices to make comparisons look whatever you want them to look.</p>
+<p><img src="https://66.media.tumblr.com/dd3b99ccbaec2d7e16fd752912bfbe38/tumblr_oi79u8H5cG1sgh0voo1_1280.jpg" class="img-fluid"></p>
+<p>In general the addition of 3D to a visualisation is always a bad idea, as it adds nothing and often actively distorts the message.</p>
+<p>Let it be noted that I blame MS Office for the all too frequent presence of 3D charts.</p>
+<p>Wrong geoms are not restricted to 3D and pie charts though: in the following graph, for example, the choice of a line plot implies the presence of a trend among independent categories (on the x axis we have a categorical variable, not an ordinal one). Line plots are very useful for ordinal vairables and especially time variables, but not in this case.</p>
+<p><img src="https://66.media.tumblr.com/40b2bf7e70d3a562cf451e185efa3fef/1024c712f4dc1934-27/s2048x3072/85da1316522e8813367b7ed1d5cab6b8b30dfafb.png" class="img-fluid"></p>
+<p>Notice that in the chart there is no real mistake, but the line suggests a relationship between cities that are close on the x axis, while they are just sorted by the percentage of AC ownership in households.</p>
+<p>Another common class of lying geoms is pictograms in infographics. The problem here is that more often than not we see the underlying variable mapped to the radius of the picture, while looking at pictures we instinctively compare the areas, which go with the square of the radius. Notice, for example, how in the following infographics, in the “Skipping breakfast” section a bowl which is four times larger than the one next to it is used to represent a quantity that is roughly twice the other.</p>
+<p><img src="https://thumbnails-visually.netdna-ssl.com/london-worker-index-infographic_5494896c61361_w1500.jpg" class="img-fluid"></p>
+<p>A better solution is actually used in the “office romance” section (second to last) of the same infographic, where the dimension is mapped onto the number of copies of the same picture. Less visually appealing for sure, but more truthful. An alternative solution would be mapping the variable to the actual area of the picture, but that makes the comparison harder to make (because we are worse at comparing areas), unless the quantity itself is an area.</p>
+<p>Good infographics are tricky to make.</p>
+</section>
+<section id="lying-with-other-elements" class="level4">
+<h4 class="anchored" data-anchor-id="lying-with-other-elements">Lying with other elements</h4>
+<p>If you really do not want to lie with the chart itself, you still have the possibility of using the additional elements, like labels, scales, legends and so on.</p>
+<p>This is often done by omission.</p>
+<p>I am pretty sure that “label your axis” is a mantra that we have all heard at school, but what better way to produce a visualisation that has really little explanatory power, but gives a sense of “backed up by data” to what is effectively a marketing ad?</p>
+<p><img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/google-cloud-pokemon-go-1kwkj.max-700x700.PNG" class="img-fluid"></p>
+<p>Another possibility is to put the legend far away from the actual chart, so that the eye constantly has to go back and forth before essentially giving up. For maximum effect, remove any number, sort the legend in an imperscrutable way, adopt a colour palette that has several similar hues for unrelated categories and, of course, use a donut chart for many similar quantities.</p>
+<p><img src="https://66.media.tumblr.com/cc32a4f450a6d1960bf9b7ff1b274d32/tumblr_q8isvmN57E1sgh0voo1_1280.jpg" class="img-fluid"></p>
+<p>Or if you really, really want to go overboard, add a messed up mapping, and you have successfully achieved The Sun level of data visualisation</p>
+<div class="embed">
+<blockquote class="twitter-tweet blockquote">
+<a href="https://twitter.com/ariehkovler/status/873091140274110464"></a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js"></script>
+</div>
+<blockquote class="blockquote">
+<p>Important: Unless you really know what you are doing, avoid pie charts and donut charts and avoid the rainbow colour palette. Pay attention to all the elements of your data visualisation.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="rule-n.3-reduce-the-noise-amplify-the-signal" class="level2">
+<h2 class="anchored" data-anchor-id="rule-n.3-reduce-the-noise-amplify-the-signal">Rule n.3: Reduce the noise, amplify the signal</h2>
+<p>Edward Tufte, whom I have mentioned while talking about the Challenger disaster, coined the term “Chartjunk” to refer to all the unnecessary elements of the chart that distract from the data itself. “Maximising the the data-ink ratio” is one of Tufte’s rule, by which he means that we should consider reduce as much as possible all the “ink” (this was an era when data visualisation tended not to sit on a screen) that is not representing the data. This is a very good rule of thumb, and in the process of developing a good aestethic for effective data visualisation I strongly advise to practice the art of minimalist charts. The problem is that this can easily go <a href="http://www.perceptualedge.com/articles/visual_business_intelligence/sometimes_we_must_raise_our_voices.pdf">too far</a> if followed to the letter. The idea behind my 3rd rule is to remove whatever distracts and add whatever conveys the message. It is true that we should let the data speak for itself, but data has a very faint voice, and we should make sure that its whisper is heard loud and clear.</p>
+<p>The following is often found as an example of bad visualisation, due to the very low data-ink ratio and the amount of chartjunk.</p>
+<p><img src="http://visualoop.com/media/2017/06/diamonds-1040x917.jpg" class="img-fluid"></p>
+<p>I actually disagree: this is a visualisation made for a Time magazine issue dedicated to the price of diamonds. Its message is extremely clear (the price of diamonds has fallen), and its intended audience are the readers of Time magazine, not diamond traders; in this case even the actual numbers are probably not that important, if not to convey some sense of scale.</p>
+<p>The visualisation clearly conveys the intended message to the intended audience and does so capturing the attention in a way more effective way than a boring and clean chart would have made. As such, I consider it an excellent storytelling data visualisation.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The most important thing is that your message is clear. Remove what distracts from it and add elements that emphasize it. But Rule n.1 and 2 take precedence.</p>
+</div>
+</div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>Data visualisation is a vast field (in which I am not an expert) and a deep rabbit hole to look into, but I hope to have been able to condense into my three rules some simple fundamental principles that can help you making good data visualisation independently of your role, experience and tools of choice. I find that these set of rules are a useful lens that help me understand the thinking behind a lot of what I read on the topic, which at the same time, makes it easier to learn. Hopefully it will work for you too.</p>
+<ol start="13" type="A">
+<li></li>
+</ol>
+</section>
+<section id="additional-material" class="level2">
+<h2 class="anchored" data-anchor-id="additional-material">Additional material</h2>
+<p>If you want to delve deeper into the topic, I suggest to have a look at the following material, in no particular order. No affiliate links.</p>
+<ol type="1">
+<li><a href="https://www.autodeskresearch.com/publications/samestats">Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing</a> the paper about the “Datasaurus dozen”</li>
+<li><a href="https://www.edwardtufte.com/tufte/">Edward Tufte’s website</a>. Tufte’s a recognised name, although a bit extreme in his views sometimes.</li>
+<li>On the subject of finding the “why” and “who” of data visualisations the booklet <a href="https://makingdatavisual.github.io/">Making Data Visual</a> presents the interesting concept of “data interview”. I think it is a nice little read.</li>
+<li><a href="https://viz.wtf/">viz.wtf</a> your daily dose of graph “mistakes”, most of the examples I used are coming from this website</li>
+<li>A very good and detailed <a href="https://towardsdatascience.com/the-art-of-effective-visualization-of-multi-dimensional-data-6c7202990c57">Medium article</a> on visualising data in high dimensions, with a lot of good advice</li>
+<li><a href="https://www.amazon.co.uk/Visual-Storytelling-Introduction-Visualization-Addison-Wesley/dp/0321933176">Visual storytelling with D3</a>, although specifically aimed at D3.js, the author is one of the data journalists behind the excellent visualisations at <a href="https://fivethirtyeight.com/">538</a> and the book contains a lot of general good advice</li>
+<li>A discussion on when “eliminating chartjunk” can <a href="http://www.perceptualedge.com/articles/visual_business_intelligence/sometimes_we_must_raise_our_voices.pdf">go too far</a> (this is the reason behind the “amplify the signal” part of rule n.3 we have talked about). And a <a href="https://eagereyes.org/blog/2013/definition-chart-junk">sensible improvement</a> on Tufte’s definition of chartjunk</li>
+<li>The original paper on the <a href="https://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf">layered grammar of graphics</a>, which has given us <code>ggplot</code>. Extremely useful to understand what data plots <em>are</em> from a technical points of view and to get the hang of the best plotting libraries. From the same author of the Medium post on the visualisations of high dimensional data, we have <a href="https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149">one specifically on the same topic</a>, but specifically aimed at explaining the grammar of graphics approach. Very useful even if R and ggplot are not your thing</li>
+<li>The podcast Data Stories and in particular the <a href="https://datastori.es/119-color-with-karen-schloss/">episode dedicated to colours</a>. Although it is not superexciting, the podcasts contains a lots of gems</li>
+<li>The <a href="https://link.springer.com/book/10.1007/978-3-319-55444-0">Data Science Design Manual</a> (free to download from Springer’s website for the time being). And in particular the chapter on exploratory data analysis and data visualisation. The whole book is a bit dated in its views in my opinion, but it is a good organised review of the data process</li>
+<li>Darrell Huff’s <a href="https://www.amazon.co.uk/dp/0393310728/ref=reader_auth_dp">How to lie with statistics</a> a classic and a must read for every data professional</li>
+<li>More specifically dedicated to data plots, <a href="https://www.amazon.co.uk/How-Charts-Gerald-Everett-Jones/dp/0996543864/ref=dp_ob_title_bk">How to lie with charts</a></li>
+</ol>
+
+
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <guid>https://datacasual.com/posts/2020-06-03-data-vis-fundamentals.html</guid>
+  <pubDate>Tue, 02 Jun 2020 23:00:00 GMT</pubDate>
+  <media:content url="https://3.bp.blogspot.com/-dYWcbKVsiGY/V8RFmMFnLjI/AAAAAAAAG9Y/Qr_PGmR0V8MhSXb8-rBdAsdciny-oql2ACLcB/s1600/1datasaurus.png" medium="image" type="image/png"/>
+</item>
+<item>
+  <title>Palle cubiche (minipost)</title>
+  <link>https://datacasual.com/posts/2020-05-06-palle-cubiche.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>In maniera più o meno legittima, in tempi di pandemia chiunque abbia avuto un minimo di infarinatura statistica (me compreso) si è dilettato a fare modelli di evoluzione del contagio. Come data scientist, e il mio passato da matematico aiuta, ho imparato che una delle cose più importanti quando si produce un modello è cercare in tutti i modi di trovarne i limiti e comunicare le possibili fonti di errore. Tutti i modelli sono sbagliati, e non preoccuparsi delle conseguenze di questi errori, può avere e spesso ha effetti catastrofici (ci sono decine di esempi, soprattutto con gli algoritmi più sofisticati, ma questo è un discorso per una lunga serie di post).</p>
+<p>Particolarmente grave, quindi, quando un organo ufficiale si vanta a sproposito di un proprio modello, come in questo caso</p>
+<div class="embed">
+<blockquote class="twitter-tweet blockquote">
+<a href="https://twitter.com/WhiteHouseCEA/status/1257680258364555264?s=20"></a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js"></script>
+</div>
+<p>L’account del tweet (che per i non anglofoni essenzialmente dice che grazie alle nuove informazioni ottenute su COVID hanno costruito un “modello cubico” che funziona molto bene e che, come implica la figura, può essere usato per predirre l’andamento dell’epidemia negli USA) appartiene al “Council of Economic Advisers” della Casa Bianca, un organo ufficiale del governo degli USA.</p>
+<p>A molti è saltato subito agli occhi che il “modello cubico” sembra non essere altro che un fitting polinomiale di terzo grado fatto in pochi secondi con Excel (qui, ad esempio il commento di Nate Silver, tanto per appellarsi all’autorità)</p>
+<div class="embed">
+<blockquote class="twitter-tweet blockquote">
+<a href="https://twitter.com/NateSilver538/status/1257477043970887682"></a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js"></script>
+</div>
+<p>Ma il problema non è nemmeno tanto l’utilizzo di un modello semplice. Ma che il modello è fatto ad arte per mostrare che l’epidemia è quasi finita e quindi è il momento di riaprire tutto.</p>
+<p>Che problemi ci sono con il nostro “modello cubico”?</p>
+<ol type="1">
+<li><p>Prima di tutto utilizza come unico fattore predittivo del numero di morti giornaliero… la data. La cosa va anche bene quando si vuole mostrare cosa succederà nel breve termine <strong>se niente cambia nell’andamento attuale</strong>, ma ha un valore predittivo molto debole e non può essere utilizzato per predire un cambio di andamento (questo, ad esempio, è un errore che ho visto commettere a fin troppi matematici a inizio epidemia, nel tentare di capire quando sarebbe arrivato “il picco” o, per i più raffinati, “il flesso”; purtroppo sapere cos’è un’esponenziale o un modello logistico non attrezza a fare previsioni in pratica).</p></li>
+<li><p>Secondo questo modello, tra una settimana o poco più si arriva a zero contagi negli USA. Questo è il messaggio che si vuole far passare, ma è quanto meno molto poco probabile</p></li>
+<li><p>Se non fosse stato tagliato ad arte, lo stesso modello ci dice che verso inizio dicembre l’intera popolazione mondiale è morta di COVID e non ce ne siamo accorti</p></li>
+<li><p>Sempre estendendo il nostro “modello cubico”, questa volta nel futuro, realizziamo che intorno al 20 maggio i morti iniziano a tornare in vita in numeri sempre più abbondanti</p></li>
+</ol>
+<p>Per capire cosa intendo negli ultimi due punti, basta osservare che una curva del tipo utilizzato nel nostro modello cubico ha, più o meno, una forma come in figura</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/images/2020-05-16-palle-cubiche/cubica.png" class="img-fluid figure-img"></p>
+<figcaption>Un modello cubico in azione…</figcaption>
+</figure>
+</div>
+<p>Certamente tutto questo sostiene quanto detto da Trump a suo tempo che l’epidemia “scomparirà come fosse un miracolo”, ma aspettarsi che i morti tornino in vita è forse un po’ esagerato persino per lui. Ed è evidente che un modello che è sicuramente completamente sbagliato in 2 settimane, non ha alcun valore predittivo a una settimana.</p>
+<p>Ma il problema grave è che stiamo parlando di un organo di stato ufficiale che spara idiozie spacciandole per certezze.</p>
+<p>Palle cubiche, appunto.</p>
+<p>Elon Musk con un solo tweet ha prodotto miliardi di dollari di danni a Tesla, ma qui si tratta di persone che moriranno a causa di questo tweet.</p>
+<p>Questo non è e non può essere accettabile.</p>
+<ol start="13" type="A">
+<li></li>
+</ol>
+<p>PS: non posso esimermi dal ricordare che anche in Italia <a href="https://www.corriere.it/economia/lavoro/20_marzo_30/coronavirus-italia-quando-si-azzereranno-contagi-previsioni-regione-regione-ae9099dc-7264-11ea-bc49-338bb9c7b205.shtml">alcuni economisti</a> hanno a suo tempo previsto zero contagi per questa settimana (e a quanto pare in Piemonte non ci sono più contagi già da 2 o 3 settimane, si vede che ci siamo sbagliati tutti). A onor del vero, all’inizio gli autori hanno sottolineato come la loro fosse una semplice analisi da non usare in senso predittivo. Ma con l’attenzione mediatica (e il Corriere è responsabile in questo caso) l’iniziale cautela è stata presto abbandonata.</p>
+
+
+
+ ]]></description>
+  <category>italian</category>
+  <category>covid19</category>
+  <guid>https://datacasual.com/posts/2020-05-06-palle-cubiche.html</guid>
+  <pubDate>Tue, 05 May 2020 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Tutti in maschera? La scienza dice sì</title>
+  <link>https://datacasual.com/posts/2020-04-19-tutti-in-maschera.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<blockquote class="blockquote">
+<p>Tradotto dall’<a href="https://www.fast.ai/2020/04/13/masks-summary/">originale</a> del prof. Trisha Greenhalgh OBE e di Jeremy Howard</p>
+</blockquote>
+<p>Non sapete cosa pensare a proposito delle mascherine? Certo, è una questione complicata, ma meno di quanto alcuni lascino intendere. Abbiamo esaminato la scienza disponibile (cfr. il nostro articolo <a href="http://up.fm/masks">Face Masks Against COVID-19: An Evidence Review</a> — con non meno di 84 riferimenti bibliografici! — e <a href="https://www.bmj.com/content/369/bmj.m1435">Face masks for the public during the covid-19 crisis</a>). In questo post riassiumiamo il punto di vista di diverse aree di ricerca, con la nostra interpretazione della faccenda.</p>
+<section id="lepidemiologia-della-diffusione-della-malattia" class="level2">
+<h2 class="anchored" data-anchor-id="lepidemiologia-della-diffusione-della-malattia">L’epidemiologia della diffusione della malattia</h2>
+<p>Se frequentate internet anche sporadicamente, quasi sicuramente avrete visto video con trappole per topi o pezzi di domino, dove un solo evento scatena una gigantesca reazione a catena. Più vicini sono i pezzi del domino (o le trappole per topi), più la reazione è caotica. Ogni malattia infettiva ha un coefficiente di trasmissione (R0); se questo coefficiente è esattamente 1, vuol dire che ogni persona infetta, in media, contagia un’altra persona. Una malattia con R0 minore di 1 scompare nel tempo. La variante dell’influenza che ha causato la pandemia del 1918 aveva un R0 di 1,8. Per il virus che causa COVID-19 R0 è stato stimato intorno a 2,4 dai ricercatori dell’Imperial College di Londra, ma alcune ricerche suggeriscono che potrebbe addirittura arrivare a 5,7. Questo vuol dire che senza misure di contenimento, COVID-19 si diffonde moltissimo e in maniera molto rapida. Soprattutto, i pazienti con COVID-19 sono contagiosi soprattutto negli stadi iniziali della malattia (To et al.&nbsp;2020; Zou et al.&nbsp;2020; Bai et al.&nbsp;2020; Zhang et al.&nbsp;2020; Doremalen et al.&nbsp;2020; Wei 2020), quando spesso presentano pochi o nessun sintomo.</p>
+</section>
+<section id="la-fisica-delle-goccioline-e-degli-aerosol" class="level2">
+<h2 class="anchored" data-anchor-id="la-fisica-delle-goccioline-e-degli-aerosol">La fisica delle goccioline e degli aerosol</h2>
+<p>Quando parliamo, minuscole goccioline vengono espulse dalla bocca. Nel caso in cui una persona sia infetta, queste goccioline contengono virus. Solo le goccioline più grandi durano più di un decimo di secondo prima di evaporare e trasformarsi in “nuclei”, 3-5 volte più piccoli della goccia originale, ma ancora contenenti virus (Wells 1934; Duguid 1946; Morawska et al.&nbsp;2009).</p>
+<p>Questo vuol dire che è molto più semplice bloccare le goccioline appena fuori dalla bocca, quando sono molto più grandi, piuttosto che bloccarle quando raggiungono la faccia e le mucose di una persona non contagiata che viene colpita dalle goccioline in questione. Ma per qualche motivo, questo non è quello su cui gran parte dei ricercatori si è concentrata…</p>
+</section>
+<section id="mascherine-e-scienze-dei-materiali" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-dei-materiali">Mascherine e scienze dei materiali</h2>
+<p>I dibattiti sull’efficacia delle mascherine spesso partono dal presupposto che lo scopo della mascherina è di proteggere chi la indossa, visto che è quello su cui ci si concentra e si insegna durante la formazione dei medici. In questo le mascherine di stoffa offrono una protezione scadente (pur non essendo del tutto inutili). Per avere una protezione del 100%, <em>chi indossa la mascherina</em> deve avere un respiratore medico (tipo N95) adeguatamente indossato. Ma mascherine di stoffa, indossate da una persona infetta, sono <em>estremamente efficaci</em> nel <em>proteggere le persone circostanti</em>. Questo, in inglese, è detto “source control”, ovvero “controllo alla fonte”. Ed è il controllo alla fonte quello di cui si parla (o di cui si dovrebbe parlare) nel dibattito sulle mascherine <em>per il pubblico</em>.</p>
+<p>Se una persona con COVID-19 tossisce su qualcuno a una ventina di centimetri di distanza, una mascherina di cotone riduce la quantità di virus trasmessa all’altra persona di <a href="https://annals.org/aim/fullarticle/2764367/effectiveness-surgical-cotton-masks-blocking-sars-cov-2-controlled-comparison">36 volte</a>, ed è persino più efficace di una mascherina chirurgica. Curiosamente, i ricercatori che hanno scoperto questa cosa hanno considerato questa riduzione di 36 volte “inefficace”. Noi non siamo d’accordo. Vuol dire trasmettere solamente un 36<sup>mo</sup> della quantità di virus trasmessa altrimenti, diminuendo la carica virale, con una conseguente probabile riduzione della probabilità di contagio e sintomi più lievi se il contagio avviene.</p>
+</section>
+<section id="la-matematica-della-trasmissione-del-virus" class="level2">
+<h2 class="anchored" data-anchor-id="la-matematica-della-trasmissione-del-virus">La matematica della trasmissione del virus</h2>
+<p>I modelli matematici sviluppati dal nostro team, supportati da altra ricerca (Yan et al.&nbsp;2019), suggeriscono che se la maggior parte delle persone indossano mascherine in pubblico, il fattore di trasmissione (“R effettivo”), può scendere sotto 1, arrestando la diffusione del virus. La mascherina non deve bloccare ogni singolo virus, ma più ne blocca, più basso è il valore effettivo di R.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/images/2020-04-19-tutti-in-maschera/image1.png" class="img-fluid figure-img"></p>
+<figcaption>Modello dell’impatto dell’uso delle mascherine sul fattore di riproduzione</figcaption>
+</figure>
+</div>
+<p>Quanto la diffusione delle mascherine sia efficace dipende da tre fattori illustrati dal diagramma: quanto la maschera blocca il virus (“Efficacy”: l’asse orizzontale), la percentuale della popolazione che indossa le maschere (“Adherence”: l’asse verticale), e il fattore di trasmissione della malattia (R0: le linee nere nel grafico). L’area in blu del diagramma indica un R0 minore di 1, necessario per sconfiggere l’epidemia. Anche se le maschere dovessero bloccare una porzione molto più piccola di particelle virali, la malattia potrebbe comunque essere controllata, ma l’intera popolazione o quasi dovrebbe indossare maschere.</p>
+</section>
+<section id="mascherine-e-scienze-politiche" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-politiche">Mascherine e scienze politiche</h2>
+<p>Come si può far sì che tutti o comunque la maggioranza delle persone indossino maschere? Beh, si può educarle e cercare di convincerle, ma un approccio più efficace è <em>imporre</em> che tutti indossino mascherine, che sia in contesti specifici come sui trasporti pubblici o nei negozi alimentari, o ancor meglio per qualunque motivo si esca da casa. La ricerca sui vaccini (Bradford and Mandich 2015) mostra che nelle aree in cui l’esenzione dai vaccini segue restrizioni più severe, si ha una copertura vaccinale sensibilimente più alta. Lo stesso approccio sta ora venendo utilizzato per ottenere un’adozione più vasta delle mascherine, e risultati preliminari (Leffler et al.&nbsp;2020) indicano che leggi in tal senso sono efficaci nel migliorare il rispetto della misura e stanno rallentando se non fermando la diffusione di COVID-19.</p>
+</section>
+<section id="esperimenti-con-le-maschere-artificiali-e-naturali" class="level2">
+<h2 class="anchored" data-anchor-id="esperimenti-con-le-maschere-artificiali-e-naturali">Esperimenti con le maschere: artificiali e naturali</h2>
+<p>Un esperimento artificiale si ha quando un ricercatore divide un campione di persone (solitamente a caso, da cui il termine “sperimentazione controllata randomizzata” – randomized controlled trial) in un gruppo che indossa mascherine e un gruppo che non le indossa (il cosiddetto gruppo di controllo). Non ci sono state sperimentazioni controllate randomizzate sull’uso delle mascherine nella popolazione generale nel caso di COVID-19. Sperimentazioni controllate randomizzate nella prevenzione di altre malattie (come l’influenza e la tubercolosi) con l’uso delle mascherine hanno tendenzialmente mostrato un effetto limitato e in molti casi non statisticamente significativo. In molti di questi studi, i soggetti assegnati al gruppo delle mascherine non sempre hanno indossato le mascherine.</p>
+<p>Un esperimento naturale è quando si studia qualcosa che accade al di fuori di un contesto controllato – ad esempio quando una nazione introduce una misura per incrementare l’utilizzo delle mascherine. La Corea del Sud, ad esempio, ha avuto una diffusione interna di COVID-19 che nelle settimane iniziali ha seguito la traiettoria dell’Italia. Verso la fine di febbraio, il governo ha cominciato a fornire una scorta regolare di mascherine a tutti i cittadini. Da quel momento tutto è cambiato. Mentre il numero di morti giornalieri in Italia ha cominciato a crescere a livelli terrificanti, quello della Corea del Sud ha invece cominciato non solo a crescere di meno, ma <em>a diminuire</em>. Questo è il numero di casi attivi in Corea del Sud (in rosso) e in Italia (in blu); osservate cosa succede a inizio marzo, quando la distribuzione delle mascherine ha cominciato a fare effetto (questa analisi è stata fatta da <a href="https://twitter.com/slowblogger">Hyokon Zhiang</a> la visualizzazione da Reshama Shaik):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/images/2020-04-19-tutti-in-maschera/image2.png" class="img-fluid figure-img" width="500"></p>
+<figcaption>Paragone dei casi di COVID-19 tra Corea del Sud e Italia</figcaption>
+</figure>
+</div>
+<p>Gli esperimenti naturali sono scientificamente imperfetti, perché non c’è gruppo di controllo, quindi non possiamo affermare che alcun cambiamento sia dovuto alle mascherine. Alcune nazioni che hanno introdotto una politica sulle mascherine, hanno introdotto più o meno allo stesso tempo altre misure come un rigido distanziamento sociale, la chiusura delle scuole e la cancellazione degli eventi pubblici. Persino in quei casi, però, si possono trovare paragoni interessanti. Ad esempio, l’Austria e la confinante Repubblica Ceca hanno introdotto misure di distanziamento sociale nella stesso giorno, ma la Repubblica Ceca ha introdotto <em>anche</em> l’obbligo di indossare mascherine. In Austria l’infezione ha continuato a peggiorare, mentre in Repubblica Ceca si è appiattita. Finché l’Austria ha introdotto leggi sulle mascherine qualche settimana più tardi e le due nazioni sono tornate su traiettorie simili.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://datacasual.com/posts/images/2020-04-19-tutti-in-maschera/image3.png" class="img-fluid figure-img" width="500"></p>
+<figcaption>Paragone dei casi di COVID-19 tra Repubblica Ceca e Austria</figcaption>
+</figure>
+</div>
+<p>Soprattutto: indipendentemente dal momento, in <em>tutte</em> le nazioni dove l’uso delle mascherine è stato incoraggiato per legge, o in cui le mascherine sono state distribuite alla popolazione, il numero di casi e di morti giornalieri è precipitato.</p>
+</section>
+<section id="mascherine-e-scienze-comportamentali" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-comportamentali">Mascherine e scienze comportamentali</h2>
+<p>Alcuni sostengono (Brosseau et al.&nbsp;2020) che costringere o incoraggiare le persone a indossare mascherine incoraggerebbe comportamenti rischiosi nella popolazione (ad esempio, uscire di più o lavarsi le mani di meno), con un risultato netto negativo, come osservato in alcuni controlli sperimentali con le mascherine. Alcune argomentazioni simili sono state usate contro l’adozione di strategie di prevenzione per HIV (Cassell et al.&nbsp;2006; Rojas Castro, Delabre, and Molina 2019) o leggi per l’obbligo dei caschi sui motocicli (Ouellet 2011). Tuttavia, la ricerca sul campo in questi ambiti ha evidenziato che anche se alcuni individui rispondono con un comportamento rischioso, a livello di popolazione si osserva un miglioramento della sicurezza e del benessere (Peng et al.&nbsp;2017; Houston and Richardson 2007).</p>
+</section>
+<section id="mascherine-ed-economia" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-ed-economia">Mascherine ed economia</h2>
+<p>Alcune analisi economiche hanno confrontato il costo di distribuire mascherine con il valore (economico e non) che si potrebbe ottenere – o potenzialmente perdere – se fossero distribuite. Questi studi economici (Abaluck et al.&nbsp;2020) indicano che ogni maschera indossata da una persona (che ha un costo praticamente nullo) potrebbe generare benefici economici di migliaia di dollari e salvare molte vite.</p>
+</section>
+<section id="mascherine-e-antropologia" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-antropologia">Mascherine e antropologia</h2>
+<p>Indossare mascherine in pubblico è diventata una cosa normale in molte nazioni asiatiche, sia per motivi individuali (per proteggersi dall’inquinamento) che collettivi (come risultato delle recenti epidemie di MERS e SARS). La mia mascherina ti protegge, la tua mascherina mi protegge. Nella maggioranza di queste nazioni, però, la norma era di indossare mascherine solo quando si presentano dei sintomi; solo nelle ultime settimane, con l’aumentare della consapevolezza sui contagi da parte di asintomatici, l’abitudine di indossare le maschere a prescindere dai sintomi si è diffusa.</p>
+</section>
+<section id="conclusioni" class="level2">
+<h2 class="anchored" data-anchor-id="conclusioni">Conclusioni</h2>
+<p>Anche se non tutte le evidenze scientifiche supportano la diffusione delle mascherine, la maggior parte puntano nella stessa direzione. Il nostro esame delle evidenze disponibili ci ha portato a una conclusione chiara: tenetevi le vostre goccioline – indossate mascherine.</p>
+<p>Non è difficile <a href="https://masks4all.co">farsele da soli</a> con una maglietta, un fazzoletto, un pezzo di carta da cucina o anche semplicemente indossando una sciarpa o una bandana sulla faccia. Idealmente, utilizzate un tessuto stretto che permette di respirare. I ricercatori raccomandano di includere uno strato di carta da cucina o un filtro usa e getta; potete semplicemente aggiungerlo tra due strati di tessuto. Non c’è alcuna evidenza che una mascherina debba essere fatta con mezzi speciali per essere efficace nel controllo alla fonte. Una mascherina di stoffa può essere lavata e riutilizzata, proprio come una maglietta.</p>
+<p>A quanto pare, se state incubando COVID-19, le persone a cui tenete vi saranno grate per aver indossato una mascherina.</p>
+</section>
+<section id="epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte" class="level2">
+<h2 class="anchored" data-anchor-id="epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte">Epilogo: Jeremy mostra come funziona il controllo alla fonte</h2>
+<p>Ecco un piccolo esperimento di Jeremy sul controllo alla fonte!</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/F0RcH9DfuyE?si=s8joqyuNQgLojAVs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="riferimenti" class="level2">
+<h2 class="anchored" data-anchor-id="riferimenti">Riferimenti</h2>
+<ul>
+<li>Abaluck, Jason, Judith A. Chevalier, Nicholas A. Christakis, Howard Paul Forman, Edward H. Kaplan, Albert Ko, and Sten H. Vermund. 2020. “The Case for Universal Cloth Mask Adoption and Policies to Increase Supply of Medical Masks for Health Workers.” SSRN Scholarly Paper ID 3567438. Rochester, NY: Social Science Research Network. <a href="https://papers.ssrn.com/abstract=3567438" class="uri">https://papers.ssrn.com/abstract=3567438</a>.</li>
+<li>Bai, Yan, Lingsheng Yao, Tao Wei, Fei Tian, Dong-Yan Jin, Lijuan Chen, and Meiyun Wang. 2020. “Presumed Asymptomatic Carrier Transmission of Covid-19.” <em>Jama</em>.</li>
+<li>Bradford, W David, and Anne Mandich. 2015. “Some State Vaccination Laws Contribute to Greater Exemption Rates and Disease Outbreaks in the United States.” <em>Health Affairs</em> 34 (8): 1383–90.</li>
+<li>Brosseau, Lisa M., ScD, Margaret Sietsema, PhD Apr 01, and 2020. 2020. “COMMENTARY: Masks-for-All for COVID-19 Not Based on Sound Data.” <em>CIDRAP</em>. <a href="https://www.cidrap.umn.edu/news-perspective/2020/04/commentary-masks-all-covid-19-not-based-sound-data" class="uri">https://www.cidrap.umn.edu/news-perspective/2020/04/commentary-masks-all-covid-19-not-based-sound-data</a>.</li>
+<li>Cassell, Michael M, Daniel T Halperin, James D Shelton, and David Stanton. 2006. “Risk Compensation: The Achilles’ Heel of Innovations in Hiv Prevention?” <em>Bmj</em> 332 (7541): 605–7.</li>
+<li>Doremalen, Neeltje van, Trenton Bushmaker, Dylan H. Morris, Myndi G. Holbrook, Amandine Gamble, Brandi N. Williamson, Azaibi Tamin, et al.&nbsp;2020. “Aerosol and Surface Stability of SARS-CoV-2 as Compared with SARS-CoV-1.” <em>New England Journal of Medicine</em> 0 (0): null. <a href="https://doi.org/10.1056/NEJMc2004973" class="uri">https://doi.org/10.1056/NEJMc2004973</a>.</li>
+<li>Duguid, JP. 1946. “The Size and the Duration of Air-Carriage of Respiratory Droplets and Droplet-Nuclei.” <em>Epidemiology &amp; Infection</em> 44 (6): 471–79.</li>
+<li>Houston, David J, and Lilliard E Richardson. 2007. “Risk Compensation or Risk Reduction? Seatbelts, State Laws, and Traffic Fatalities.” <em>Social Science Quarterly</em> 88 (4): 913–36.</li>
+<li>Leffler, Christopher, Edsel Ing, Craig A. McKeown, Dennis Pratt, and Andrzej Grzybowski. 2020. “Country-Wide Mortality from the Novel Coronavirus (COVID-19) Pandemic and Notes Regarding Mask Usage by the Public.”</li>
+<li>Morawska, LJGR, GR Johnson, ZD Ristovski, Megan Hargreaves, K Mengersen, Steve Corbett, Christopher Yu Hang Chao, Yuguo Li, and David Katoshevski. 2009. “Size Distribution and Sites of Origin of Droplets Expelled from the Human Respiratory Tract During Expiratory Activities.” <em>Journal of Aerosol Science</em> 40 (3): 256–69.</li>
+<li>Ouellet, James V. 2011. “Helmet Use and Risk Compensation in Motorcycle Accidents.” <em>Traffic Injury Prevention</em> 12 (1): 71–81.</li>
+<li>Peng, Yinan, Namita Vaidya, Ramona Finnie, Jeffrey Reynolds, Cristian Dumitru, Gibril Njie, Randy Elder, et al.&nbsp;2017. “Universal Motorcycle Helmet Laws to Reduce Injuries: A Community Guide Systematic Review.” <em>American Journal of Preventive Medicine</em> 52 (6): 820–32.</li>
+<li>Rojas Castro, Daniela, Rosemary M Delabre, and Jean-Michel Molina. 2019. “Give Prep a Chance: Moving on from the ‘Risk Compensation’ Concept.” <em>Journal of the International AIDS Society</em> 22: e25351.</li>
+<li>To, Kelvin Kai-Wang, Owen Tak-Yin Tsang, Wai-Shing Leung, Anthony Raymond Tam, Tak-Chiu Wu, David Christopher Lung, Cyril Chik-Yan Yip, et al.&nbsp;2020. “Temporal profiles of viral load in posterior oropharyngeal saliva samples and serum antibody responses during infection by SARS-CoV-2: an observational cohort study.” <em>Lancet Infect. Dis.</em> 0 (0). <a href="https://doi.org/10.1016/S1473-3099(20)30196-1" class="uri">https://doi.org/10.1016/S1473-3099(20)30196-1</a>.</li>
+<li>Wei, Wycliffe E. 2020. “Presymptomatic Transmission of SARS-CoV-2 â€” Singapore, January 23â€“March 16, 2020.” <em>MMWR. Morbidity and Mortality Weekly Report</em> 69. <a href="https://doi.org/10.15585/mmwr.mm6914e1" class="uri">https://doi.org/10.15585/mmwr.mm6914e1</a>.</li>
+<li>Wells, WF. 1934. “On Air-Borne Infection: Study Ii. Droplets and Droplet Nuclei.” <em>American Journal of Epidemiology</em> 20 (3): 611–18.</li>
+<li>Yan, Jing, Suvajyoti Guha, Prasanna Hariharan, and Matthew Myers. 2019. “Modeling the Effectiveness of Respiratory Protective Devices in Reducing Influenza Outbreak.” <em>Risk Analysis</em> 39 (3): 647–61. <a href="https://doi.org/10.1111/risa.13181" class="uri">https://doi.org/10.1111/risa.13181</a>.</li>
+<li>Zhang, Juanjuan, Maria Litvinova, Wei Wang, Yan Wang, Xiaowei Deng, Xinghui Chen, Mei Li, et al.&nbsp;2020. “Evolving Epidemiology and Transmission Dynamics of Coronavirus Disease 2019 Outside Hubei Province, China: A Descriptive and Modelling Study.” <em>The Lancet Infectious Diseases</em> 0 (0). <a href="https://doi.org/10.1016/S1473-3099(20)30230-9" class="uri">https://doi.org/10.1016/S1473-3099(20)30230-9</a>.</li>
+<li>Zou, Lirong, Feng Ruan, Mingxing Huang, Lijun Liang, Huitao Huang, Zhongsi Hong, Jianxiang Yu, et al.&nbsp;2020. “SARS-CoV-2 Viral Load in Upper Respiratory Specimens of Infected Patients.” <em>New England Journal of Medicine</em> 382 (12): 1177–9. <a href="https://doi.org/10.1056/NEJMc2001737" class="uri">https://doi.org/10.1056/NEJMc2001737</a>.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>italian</category>
+  <category>covid19</category>
+  <guid>https://datacasual.com/posts/2020-04-19-tutti-in-maschera.html</guid>
+  <pubDate>Sat, 18 Apr 2020 23:00:00 GMT</pubDate>
+  <media:content url="https://datacasual.com/posts/images/2020-04-19-tutti-in-maschera/image1.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Private FastPages on Kubernetes</title>
+  <link>https://datacasual.com/posts/2020-03-07-private-fastpages-on-kubernetes.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>This post is the very reason I decided myself to go back to blogging. I managed to do something that I considered relatively trivial, but let others know about it in the Fast.ai forums it turned out not to be that obvious after all. And writing about it, I realised that not even a year ago, I wouldn’t have had the faintest idea of what I am talking about here.</p>
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are not part of a mid-large company IT department, the following paragraph might sound like a bunch of corporate lingo that makes no sense. It is not completely true, but if you have no idea what I am talking about, just skip it.</p>
+</div>
+</div>
+<p>As a mathematician turned knowledge engineer turned product manager turned data scientist with a pench for learning new stuff, one of the many hats I tend to wear quite often is that of knowledge sharer. Since in my current role I am helping setting up a federated team of data analysts, one of the problems we need to solve is breaking the information siloes among data people. This way we can avoid duplicate work and we can piggyback on each others’ research in order to extract more advanced insights.</p>
+<p>Since I am a bit of a Fast.ai fanboy and I am using Jupyter a lot in my data work, when fast_template/FastPages was presented, I started thinking about how to deploy it for my use case. The main blocker was that GitHub pages are always public, even on private repos, which would have been a showstopper, as we don’t want to police a self serving tool to check that no important information is being shared publicly.</p>
+</section>
+<section id="summary-andor-tldr" class="level2">
+<h2 class="anchored" data-anchor-id="summary-andor-tldr">Summary (and/or TL;DR)</h2>
+<p>In order to deploy FastPages privately on a Kubernetes cluster you need to: 1. Change the branch to which the website built by Jekyll is pushed 2. Deploy a static webpage server (I used Nginx) with a Git-sync sidecar to keep the served site up to date 3. Makesure the sidecar can pull the fastpages repo with a read only deploy key 4. Expose the server internally with appropriate network policies and ingress configurations</p>
+<p>While steps 1-3 are fairly straightforward, the last step depends heavily on your cluster configuration and policies. I will give a very high level description of what I did, but you will have to do your own research to make it work in your case.</p>
+<section id="requirements" class="level3">
+<h3 class="anchored" data-anchor-id="requirements">Requirements</h3>
+<p>This guide is not too beginner friendly and it is not meant to be: since the risk of getting it wrong is exposing private information, you need to have some working knowledge of what you are doing or at least some way of making sure that you are not doing huge mistakes (like a SRE/DevOps person to review what you are doing). Other than that you need - Access and admin privileges to private GitHub repos - The ability of running GitHub actions on the private repos - A Kubernetes cluster set up with appropriate network policies and DNS - A namespace that can access the private GitHub repo. This is usually the case, but if your cluster is super locked down, it might not be possible</p>
+<blockquote class="blockquote">
+<p>Important: to make the deployment, you need to know your way around Kubernetes. You just need to know how to use it and deploy/manage resources into it, you don’t need cluster admin knowledge of any kind</p>
+</blockquote>
+</section>
+</section>
+<section id="setting-up-fastpages" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-fastpages">Setting up FastPages</h2>
+<p>First of all you have to setup your FastPages repo. Just follow the <a href="https://github.com/fastai/fastpages#setup-instructions">latest instructions</a> (keep in mind that the tool is under active development, so those might change quite often); this will trigger a GitHub action that will open a PR. Before following the instructions in the PR, there is a few things to do to avoid fastpages publishing private stuff by mistake. 1. Set a <a href="https://help.github.com/en/enterprise/2.15/admin/developer-workflow/configuring-protected-branches-and-required-status-checks">branch protection rule</a> to make sure that at least two approving reviews are required to push to the <code>gh-pages</code>. This is because by default, as soon as something is pushed to the <code>gh-pages</code> branch, it gets published on GitHub pages. As far as I know, there is no way to prevent this behaviour. 2. Checkout into the branch that has been opened by the Setup action (the one that the open PR is attempting to merge into master) and modify the <code>.github/workflows/ci.yaml</code> from this</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Deploy</span></span>
+<span id="cb1-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> github.event_name == 'push'</span></span>
+<span id="cb1-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> peaceiris/actions-gh-pages@v3</span></span>
+<span id="cb1-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">deploy_key</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ${{ secrets.SSH_DEPLOY_KEY }}</span></span>
+<span id="cb1-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">publish_dir</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ./_site</span></span></code></pre></div>
+<p>to something like this (you can pick whatever branch name you want)</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Deploy</span></span>
+<span id="cb2-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> github.event_name == 'push'</span></span>
+<span id="cb2-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> peaceiris/actions-gh-pages@v3</span></span>
+<span id="cb2-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb2-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">deploy_key</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ${{ secrets.SSH_DEPLOY_KEY }}</span></span>
+<span id="cb2-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">publish_branch</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> private-website-branch</span></span>
+<span id="cb2-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">publish_dir</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ./_site</span></span></code></pre></div>
+<p>After this you are can continue setting up the repo according to the instructions in the PR.</p>
+<p>This is all that is needed on the FastPages side of things.</p>
+<section id="gotchas-and-other-optional-steps" class="level3">
+<h3 class="anchored" data-anchor-id="gotchas-and-other-optional-steps">Gotchas and other optional steps</h3>
+<p>If you want the website to function in any useful way, you will have to set up an internal domain. How to do so depends heavily on how the DNS and network policies are setup in your Kubernetes cluster. If your domain is going to be, for example <code>shiny.private.website</code>, you want to make sure to that - Your CNAME file (so that the categories work properly, for example) contains <code>shiny.private.website</code> - The <code>_config.yml</code> file contains</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">url</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://shiny.private.website"</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> # the base hostname &amp; protocol for your site, e.g. http://example.com</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">baseurl</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span></span></code></pre></div>
+<p>Before you merge the setup PR (or right after that), it is also a good idea to create an <code>upstream</code> branch and to set its remote to the <a href="https://github.com/fastai/fastpages.git">original FastPages repo</a>, so that you can keep your deployment in sync with the development of FastPages.</p>
+<p>Don’t do it later as I did. It’s a pain to solve the merge conflicts.</p>
+</section>
+</section>
+<section id="deploying-the-server" class="level2">
+<h2 class="anchored" data-anchor-id="deploying-the-server">Deploying the server</h2>
+<p>Since Jekyll builds a complete static website and the github action pushes it to the branch we have set up in the step above, we only need something capable of serving it. I have used a basic <a href="https://hub.docker.com/_/nginx">Nginx alpine</a> image, but there are probably a thousand different options. In order to avoid having to redeploy the server manually everytime, furthermore, we want to add a <a href="https://github.com/kubernetes/git-sync">git-sync</a> sidecar that pulls the website branch into the served folder of the Nginx container and keeps it up to date. There are a few possible variations but this is how more or less how the manifest would look like</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apiVersion</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> apps/v1</span></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kind</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Deployment</span></span>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">metadata</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> your-namespace</span></span>
+<span id="cb4-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">spec</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">selector</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matchLabels</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">app</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages</span></span>
+<span id="cb4-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">replicas</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> # You can set this to something higher if needed</span></span>
+<span id="cb4-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">template</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">metadata</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labels</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">app</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages</span></span>
+<span id="cb4-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">spec</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">restartPolicy</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Always</span></span>
+<span id="cb4-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">securityContext</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fsGroup</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">65533</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> # to make SSH key readable </span></span>
+<span id="cb4-19"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">containers</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-20"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages</span></span>
+<span id="cb4-21"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> nginx:alpine</span></span>
+<span id="cb4-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">imagePullPolicy</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Always</span></span>
+<span id="cb4-23"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">volumeMounts</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-24"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> site</span></span>
+<span id="cb4-25"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mountPath</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> /usr/share/nginx/html</span></span>
+<span id="cb4-26"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mountPath</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> /etc/nginx/conf.d</span></span>
+<span id="cb4-27"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages-conf</span></span>
+<span id="cb4-28"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-29"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">containerPort</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb4-30"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">protocol</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> TCP</span></span>
+<span id="cb4-31"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">resources</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-32"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">limits</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">memory</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 20Mi</span></span>
+<span id="cb4-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> git-sync</span></span>
+<span id="cb4-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> k8s.gcr.io/git-sync</span></span>
+<span id="cb4-36"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">imagePullPolicy</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> IfNotPresent</span></span>
+<span id="cb4-37"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">env</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-38"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> GIT_SYNC_REPO</span></span>
+<span id="cb4-39"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"git@github.com:your-githubname/yourprivaterepo.git"</span></span>
+<span id="cb4-40"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> GIT_SYNC_DEST</span></span>
+<span id="cb4-41"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"www"</span></span>
+<span id="cb4-42"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> GIT_SYNC_ROOT</span></span>
+<span id="cb4-43"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/site"</span></span>
+<span id="cb4-44"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> GIT_SYNC_SSH</span></span>
+<span id="cb4-45"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span></span>
+<span id="cb4-46"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> GIT_SYNC_MAX_SYNC_FAILURES</span></span>
+<span id="cb4-47"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5"</span></span>
+<span id="cb4-48"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">resources</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-49"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">requests</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-50"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cpu</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 0m</span></span>
+<span id="cb4-51"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">memory</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 0Mi</span></span>
+<span id="cb4-52"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">limits</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-53"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">              </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">memory</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 200Mi</span></span>
+<span id="cb4-54"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">securityContext</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-55"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runAsUser</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">65533</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> # git-sync user</span></span>
+<span id="cb4-56"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">volumeMounts</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-57"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> git-secret</span></span>
+<span id="cb4-58"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mountPath</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> /etc/git-secret</span></span>
+<span id="cb4-59"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> site</span></span>
+<span id="cb4-60"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mountPath</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> /site</span></span>
+<span id="cb4-61"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">volumes</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-62"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> site</span></span>
+<span id="cb4-63"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">emptyDir</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">{}</span></span>
+<span id="cb4-64"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">configMap</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-65"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">defaultMode</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">420</span></span>
+<span id="cb4-66"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages-conf</span></span>
+<span id="cb4-67"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages-conf</span></span>
+<span id="cb4-68"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> git-secret</span></span>
+<span id="cb4-69"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">secret</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-70"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">secretName</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages-git-ssh</span></span>
+<span id="cb4-71"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">defaultMode</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0400</span></span>
+<span id="cb4-72"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-73"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apiVersion</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> v1</span></span>
+<span id="cb4-74"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kind</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Service</span></span>
+<span id="cb4-75"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">metadata</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-76"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages</span></span>
+<span id="cb4-77"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">spec</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-78"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">selector</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-79"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">app</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages</span></span>
+<span id="cb4-80"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-81"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> http</span></span>
+<span id="cb4-82"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">protocol</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> TCP</span></span>
+<span id="cb4-83"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">port</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb4-84"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">targetPort</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb4-85"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-86"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apiVersion</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> v1</span></span>
+<span id="cb4-87"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kind</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ConfigMap</span></span>
+<span id="cb4-88"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">metadata</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-89"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> fastpages-conf</span></span>
+<span id="cb4-90"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">namespace</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> your-namespace</span></span>
+<span id="cb4-91"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-92"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">    default.conf</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">: </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">|-</span></span>
+<span id="cb4-93">        server {</span>
+<span id="cb4-94">            listen       80;</span>
+<span id="cb4-95">            server_name _;</span>
+<span id="cb4-96">            root /usr/share/nginx/html/www/;</span>
+<span id="cb4-97">            access_log /dev/stdout;</span>
+<span id="cb4-98">        }</span>
+<span id="cb4-99"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span></code></pre></div>
+<p>Before deploying the above, generate a <a href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key">new SSH key pair</a> and create a <a href="https://kubernetes.io/docs/concepts/configuration/secret/#use-case-pod-with-ssh-keys">secret with the private key</a> in your namespace called <code>fastpages-git-ssh</code>. After that use the <strong>public</strong> key of the pair to create a new read only <a href="https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys">deploy key</a> on your FastPages repo.</p>
+<p>Once all this is done, you can deploy the above and you webserver container should start happily. Sadly, you will not be able to access it yet if your namespace has properly set policies.</p>
+<blockquote class="blockquote">
+<p>Important: Please be careful of how you manage your secrets, don’t put them on GitHub unencrypted and don’t do anything weird.</p>
+</blockquote>
+</section>
+<section id="making-the-server-accessible" class="level2">
+<h2 class="anchored" data-anchor-id="making-the-server-accessible">Making the server accessible</h2>
+<p>In order to be expose the served webpages there are probably a couple more resources to be deployed. Both of these are dependent on how your Kubernetes cluster has been set up, so there is not much I can do to help you. In order to make everything work you need 1. An <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a> to expose the HTTP route to the DNS and within the cluster 2. A <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Netork Policy</a> to make sure that the deployed resources are allowed to communicate among them, if this is not already possible by default in your namespace</p>
+<p>Once again, if you don’t knwo how to do this, you will have to consult your SRE/DevOps/SystemAdmin team or whoever is maintaining the cluster. Please don’t follow the advice of a random Data Scientist to set up network policies for potentially sensitive resources.</p>
+</section>
+<section id="parting-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="parting-thoughts">Parting thoughts</h2>
+<p>If you are reading this, you should at this point have a deployment, or know how to get a fastpages powered private website on your Kubernetes cluster.</p>
+<p>I admit that the recipe is quite verbose,but depending on your experience with Kubernetes, these steps might be more or less familiar. If that is not the case, I hope you managed to at least get an idea of what is going on.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>fastpages</category>
+  <category>kubernetes</category>
+  <guid>https://datacasual.com/posts/2020-03-07-private-fastpages-on-kubernetes.html</guid>
+  <pubDate>Sat, 07 Mar 2020 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
