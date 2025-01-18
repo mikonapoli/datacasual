@@ -1,8 +1,9 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "datacasual"
+  title: "Datacasual - Tales of an accidental data scientist"
   navbar:
     right:
       - about.qmd

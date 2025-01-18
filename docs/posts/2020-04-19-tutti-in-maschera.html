@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-04-19">
+<meta name="description" content="Come e perché in tempo di pandemia tutti dovrebbero indossare una maschera">
+
+<title>Tutti in maschera? La scienza dice sì – Datacasual - Tales of an accidental data scientist</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Datacasual - Tales of an accidental data scientist</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tutti in maschera? La scienza dice sì</h1>
+                  <div>
+        <div class="description">
+          Come e perché in tempo di pandemia tutti dovrebbero indossare una maschera
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">italian</div>
+                <div class="quarto-category">covid19</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 19, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lepidemiologia-della-diffusione-della-malattia" id="toc-lepidemiologia-della-diffusione-della-malattia" class="nav-link active" data-scroll-target="#lepidemiologia-della-diffusione-della-malattia">L’epidemiologia della diffusione della malattia</a></li>
+  <li><a href="#la-fisica-delle-goccioline-e-degli-aerosol" id="toc-la-fisica-delle-goccioline-e-degli-aerosol" class="nav-link" data-scroll-target="#la-fisica-delle-goccioline-e-degli-aerosol">La fisica delle goccioline e degli aerosol</a></li>
+  <li><a href="#mascherine-e-scienze-dei-materiali" id="toc-mascherine-e-scienze-dei-materiali" class="nav-link" data-scroll-target="#mascherine-e-scienze-dei-materiali">Mascherine e scienze dei materiali</a></li>
+  <li><a href="#la-matematica-della-trasmissione-del-virus" id="toc-la-matematica-della-trasmissione-del-virus" class="nav-link" data-scroll-target="#la-matematica-della-trasmissione-del-virus">La matematica della trasmissione del virus</a></li>
+  <li><a href="#mascherine-e-scienze-politiche" id="toc-mascherine-e-scienze-politiche" class="nav-link" data-scroll-target="#mascherine-e-scienze-politiche">Mascherine e scienze politiche</a></li>
+  <li><a href="#esperimenti-con-le-maschere-artificiali-e-naturali" id="toc-esperimenti-con-le-maschere-artificiali-e-naturali" class="nav-link" data-scroll-target="#esperimenti-con-le-maschere-artificiali-e-naturali">Esperimenti con le maschere: artificiali e naturali</a></li>
+  <li><a href="#mascherine-e-scienze-comportamentali" id="toc-mascherine-e-scienze-comportamentali" class="nav-link" data-scroll-target="#mascherine-e-scienze-comportamentali">Mascherine e scienze comportamentali</a></li>
+  <li><a href="#mascherine-ed-economia" id="toc-mascherine-ed-economia" class="nav-link" data-scroll-target="#mascherine-ed-economia">Mascherine ed economia</a></li>
+  <li><a href="#mascherine-e-antropologia" id="toc-mascherine-e-antropologia" class="nav-link" data-scroll-target="#mascherine-e-antropologia">Mascherine e antropologia</a></li>
+  <li><a href="#conclusioni" id="toc-conclusioni" class="nav-link" data-scroll-target="#conclusioni">Conclusioni</a></li>
+  <li><a href="#epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte" id="toc-epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte" class="nav-link" data-scroll-target="#epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte">Epilogo: Jeremy mostra come funziona il controllo alla fonte</a></li>
+  <li><a href="#riferimenti" id="toc-riferimenti" class="nav-link" data-scroll-target="#riferimenti">Riferimenti</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<blockquote class="blockquote">
+<p>Tradotto dall’<a href="https://www.fast.ai/2020/04/13/masks-summary/">originale</a> del prof. Trisha Greenhalgh OBE e di Jeremy Howard</p>
+</blockquote>
+<p>Non sapete cosa pensare a proposito delle mascherine? Certo, è una questione complicata, ma meno di quanto alcuni lascino intendere. Abbiamo esaminato la scienza disponibile (cfr. il nostro articolo <a href="http://up.fm/masks">Face Masks Against COVID-19: An Evidence Review</a> — con non meno di 84 riferimenti bibliografici! — e <a href="https://www.bmj.com/content/369/bmj.m1435">Face masks for the public during the covid-19 crisis</a>). In questo post riassiumiamo il punto di vista di diverse aree di ricerca, con la nostra interpretazione della faccenda.</p>
+<section id="lepidemiologia-della-diffusione-della-malattia" class="level2">
+<h2 class="anchored" data-anchor-id="lepidemiologia-della-diffusione-della-malattia">L’epidemiologia della diffusione della malattia</h2>
+<p>Se frequentate internet anche sporadicamente, quasi sicuramente avrete visto video con trappole per topi o pezzi di domino, dove un solo evento scatena una gigantesca reazione a catena. Più vicini sono i pezzi del domino (o le trappole per topi), più la reazione è caotica. Ogni malattia infettiva ha un coefficiente di trasmissione (R0); se questo coefficiente è esattamente 1, vuol dire che ogni persona infetta, in media, contagia un’altra persona. Una malattia con R0 minore di 1 scompare nel tempo. La variante dell’influenza che ha causato la pandemia del 1918 aveva un R0 di 1,8. Per il virus che causa COVID-19 R0 è stato stimato intorno a 2,4 dai ricercatori dell’Imperial College di Londra, ma alcune ricerche suggeriscono che potrebbe addirittura arrivare a 5,7. Questo vuol dire che senza misure di contenimento, COVID-19 si diffonde moltissimo e in maniera molto rapida. Soprattutto, i pazienti con COVID-19 sono contagiosi soprattutto negli stadi iniziali della malattia (To et al.&nbsp;2020; Zou et al.&nbsp;2020; Bai et al.&nbsp;2020; Zhang et al.&nbsp;2020; Doremalen et al.&nbsp;2020; Wei 2020), quando spesso presentano pochi o nessun sintomo.</p>
+</section>
+<section id="la-fisica-delle-goccioline-e-degli-aerosol" class="level2">
+<h2 class="anchored" data-anchor-id="la-fisica-delle-goccioline-e-degli-aerosol">La fisica delle goccioline e degli aerosol</h2>
+<p>Quando parliamo, minuscole goccioline vengono espulse dalla bocca. Nel caso in cui una persona sia infetta, queste goccioline contengono virus. Solo le goccioline più grandi durano più di un decimo di secondo prima di evaporare e trasformarsi in “nuclei”, 3-5 volte più piccoli della goccia originale, ma ancora contenenti virus (Wells 1934; Duguid 1946; Morawska et al.&nbsp;2009).</p>
+<p>Questo vuol dire che è molto più semplice bloccare le goccioline appena fuori dalla bocca, quando sono molto più grandi, piuttosto che bloccarle quando raggiungono la faccia e le mucose di una persona non contagiata che viene colpita dalle goccioline in questione. Ma per qualche motivo, questo non è quello su cui gran parte dei ricercatori si è concentrata…</p>
+</section>
+<section id="mascherine-e-scienze-dei-materiali" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-dei-materiali">Mascherine e scienze dei materiali</h2>
+<p>I dibattiti sull’efficacia delle mascherine spesso partono dal presupposto che lo scopo della mascherina è di proteggere chi la indossa, visto che è quello su cui ci si concentra e si insegna durante la formazione dei medici. In questo le mascherine di stoffa offrono una protezione scadente (pur non essendo del tutto inutili). Per avere una protezione del 100%, <em>chi indossa la mascherina</em> deve avere un respiratore medico (tipo N95) adeguatamente indossato. Ma mascherine di stoffa, indossate da una persona infetta, sono <em>estremamente efficaci</em> nel <em>proteggere le persone circostanti</em>. Questo, in inglese, è detto “source control”, ovvero “controllo alla fonte”. Ed è il controllo alla fonte quello di cui si parla (o di cui si dovrebbe parlare) nel dibattito sulle mascherine <em>per il pubblico</em>.</p>
+<p>Se una persona con COVID-19 tossisce su qualcuno a una ventina di centimetri di distanza, una mascherina di cotone riduce la quantità di virus trasmessa all’altra persona di <a href="https://annals.org/aim/fullarticle/2764367/effectiveness-surgical-cotton-masks-blocking-sars-cov-2-controlled-comparison">36 volte</a>, ed è persino più efficace di una mascherina chirurgica. Curiosamente, i ricercatori che hanno scoperto questa cosa hanno considerato questa riduzione di 36 volte “inefficace”. Noi non siamo d’accordo. Vuol dire trasmettere solamente un 36<sup>mo</sup> della quantità di virus trasmessa altrimenti, diminuendo la carica virale, con una conseguente probabile riduzione della probabilità di contagio e sintomi più lievi se il contagio avviene.</p>
+</section>
+<section id="la-matematica-della-trasmissione-del-virus" class="level2">
+<h2 class="anchored" data-anchor-id="la-matematica-della-trasmissione-del-virus">La matematica della trasmissione del virus</h2>
+<p>I modelli matematici sviluppati dal nostro team, supportati da altra ricerca (Yan et al.&nbsp;2019), suggeriscono che se la maggior parte delle persone indossano mascherine in pubblico, il fattore di trasmissione (“R effettivo”), può scendere sotto 1, arrestando la diffusione del virus. La mascherina non deve bloccare ogni singolo virus, ma più ne blocca, più basso è il valore effettivo di R.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/2020-04-19-tutti-in-maschera/image1.png" class="img-fluid figure-img"></p>
+<figcaption>Modello dell’impatto dell’uso delle mascherine sul fattore di riproduzione</figcaption>
+</figure>
+</div>
+<p>Quanto la diffusione delle mascherine sia efficace dipende da tre fattori illustrati dal diagramma: quanto la maschera blocca il virus (“Efficacy”: l’asse orizzontale), la percentuale della popolazione che indossa le maschere (“Adherence”: l’asse verticale), e il fattore di trasmissione della malattia (R0: le linee nere nel grafico). L’area in blu del diagramma indica un R0 minore di 1, necessario per sconfiggere l’epidemia. Anche se le maschere dovessero bloccare una porzione molto più piccola di particelle virali, la malattia potrebbe comunque essere controllata, ma l’intera popolazione o quasi dovrebbe indossare maschere.</p>
+</section>
+<section id="mascherine-e-scienze-politiche" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-politiche">Mascherine e scienze politiche</h2>
+<p>Come si può far sì che tutti o comunque la maggioranza delle persone indossino maschere? Beh, si può educarle e cercare di convincerle, ma un approccio più efficace è <em>imporre</em> che tutti indossino mascherine, che sia in contesti specifici come sui trasporti pubblici o nei negozi alimentari, o ancor meglio per qualunque motivo si esca da casa. La ricerca sui vaccini (Bradford and Mandich 2015) mostra che nelle aree in cui l’esenzione dai vaccini segue restrizioni più severe, si ha una copertura vaccinale sensibilimente più alta. Lo stesso approccio sta ora venendo utilizzato per ottenere un’adozione più vasta delle mascherine, e risultati preliminari (Leffler et al.&nbsp;2020) indicano che leggi in tal senso sono efficaci nel migliorare il rispetto della misura e stanno rallentando se non fermando la diffusione di COVID-19.</p>
+</section>
+<section id="esperimenti-con-le-maschere-artificiali-e-naturali" class="level2">
+<h2 class="anchored" data-anchor-id="esperimenti-con-le-maschere-artificiali-e-naturali">Esperimenti con le maschere: artificiali e naturali</h2>
+<p>Un esperimento artificiale si ha quando un ricercatore divide un campione di persone (solitamente a caso, da cui il termine “sperimentazione controllata randomizzata” – randomized controlled trial) in un gruppo che indossa mascherine e un gruppo che non le indossa (il cosiddetto gruppo di controllo). Non ci sono state sperimentazioni controllate randomizzate sull’uso delle mascherine nella popolazione generale nel caso di COVID-19. Sperimentazioni controllate randomizzate nella prevenzione di altre malattie (come l’influenza e la tubercolosi) con l’uso delle mascherine hanno tendenzialmente mostrato un effetto limitato e in molti casi non statisticamente significativo. In molti di questi studi, i soggetti assegnati al gruppo delle mascherine non sempre hanno indossato le mascherine.</p>
+<p>Un esperimento naturale è quando si studia qualcosa che accade al di fuori di un contesto controllato – ad esempio quando una nazione introduce una misura per incrementare l’utilizzo delle mascherine. La Corea del Sud, ad esempio, ha avuto una diffusione interna di COVID-19 che nelle settimane iniziali ha seguito la traiettoria dell’Italia. Verso la fine di febbraio, il governo ha cominciato a fornire una scorta regolare di mascherine a tutti i cittadini. Da quel momento tutto è cambiato. Mentre il numero di morti giornalieri in Italia ha cominciato a crescere a livelli terrificanti, quello della Corea del Sud ha invece cominciato non solo a crescere di meno, ma <em>a diminuire</em>. Questo è il numero di casi attivi in Corea del Sud (in rosso) e in Italia (in blu); osservate cosa succede a inizio marzo, quando la distribuzione delle mascherine ha cominciato a fare effetto (questa analisi è stata fatta da <a href="https://twitter.com/slowblogger">Hyokon Zhiang</a> la visualizzazione da Reshama Shaik):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/2020-04-19-tutti-in-maschera/image2.png" class="img-fluid figure-img" width="500"></p>
+<figcaption>Paragone dei casi di COVID-19 tra Corea del Sud e Italia</figcaption>
+</figure>
+</div>
+<p>Gli esperimenti naturali sono scientificamente imperfetti, perché non c’è gruppo di controllo, quindi non possiamo affermare che alcun cambiamento sia dovuto alle mascherine. Alcune nazioni che hanno introdotto una politica sulle mascherine, hanno introdotto più o meno allo stesso tempo altre misure come un rigido distanziamento sociale, la chiusura delle scuole e la cancellazione degli eventi pubblici. Persino in quei casi, però, si possono trovare paragoni interessanti. Ad esempio, l’Austria e la confinante Repubblica Ceca hanno introdotto misure di distanziamento sociale nella stesso giorno, ma la Repubblica Ceca ha introdotto <em>anche</em> l’obbligo di indossare mascherine. In Austria l’infezione ha continuato a peggiorare, mentre in Repubblica Ceca si è appiattita. Finché l’Austria ha introdotto leggi sulle mascherine qualche settimana più tardi e le due nazioni sono tornate su traiettorie simili.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/2020-04-19-tutti-in-maschera/image3.png" class="img-fluid figure-img" width="500"></p>
+<figcaption>Paragone dei casi di COVID-19 tra Repubblica Ceca e Austria</figcaption>
+</figure>
+</div>
+<p>Soprattutto: indipendentemente dal momento, in <em>tutte</em> le nazioni dove l’uso delle mascherine è stato incoraggiato per legge, o in cui le mascherine sono state distribuite alla popolazione, il numero di casi e di morti giornalieri è precipitato.</p>
+</section>
+<section id="mascherine-e-scienze-comportamentali" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-scienze-comportamentali">Mascherine e scienze comportamentali</h2>
+<p>Alcuni sostengono (Brosseau et al.&nbsp;2020) che costringere o incoraggiare le persone a indossare mascherine incoraggerebbe comportamenti rischiosi nella popolazione (ad esempio, uscire di più o lavarsi le mani di meno), con un risultato netto negativo, come osservato in alcuni controlli sperimentali con le mascherine. Alcune argomentazioni simili sono state usate contro l’adozione di strategie di prevenzione per HIV (Cassell et al.&nbsp;2006; Rojas Castro, Delabre, and Molina 2019) o leggi per l’obbligo dei caschi sui motocicli (Ouellet 2011). Tuttavia, la ricerca sul campo in questi ambiti ha evidenziato che anche se alcuni individui rispondono con un comportamento rischioso, a livello di popolazione si osserva un miglioramento della sicurezza e del benessere (Peng et al.&nbsp;2017; Houston and Richardson 2007).</p>
+</section>
+<section id="mascherine-ed-economia" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-ed-economia">Mascherine ed economia</h2>
+<p>Alcune analisi economiche hanno confrontato il costo di distribuire mascherine con il valore (economico e non) che si potrebbe ottenere – o potenzialmente perdere – se fossero distribuite. Questi studi economici (Abaluck et al.&nbsp;2020) indicano che ogni maschera indossata da una persona (che ha un costo praticamente nullo) potrebbe generare benefici economici di migliaia di dollari e salvare molte vite.</p>
+</section>
+<section id="mascherine-e-antropologia" class="level2">
+<h2 class="anchored" data-anchor-id="mascherine-e-antropologia">Mascherine e antropologia</h2>
+<p>Indossare mascherine in pubblico è diventata una cosa normale in molte nazioni asiatiche, sia per motivi individuali (per proteggersi dall’inquinamento) che collettivi (come risultato delle recenti epidemie di MERS e SARS). La mia mascherina ti protegge, la tua mascherina mi protegge. Nella maggioranza di queste nazioni, però, la norma era di indossare mascherine solo quando si presentano dei sintomi; solo nelle ultime settimane, con l’aumentare della consapevolezza sui contagi da parte di asintomatici, l’abitudine di indossare le maschere a prescindere dai sintomi si è diffusa.</p>
+</section>
+<section id="conclusioni" class="level2">
+<h2 class="anchored" data-anchor-id="conclusioni">Conclusioni</h2>
+<p>Anche se non tutte le evidenze scientifiche supportano la diffusione delle mascherine, la maggior parte puntano nella stessa direzione. Il nostro esame delle evidenze disponibili ci ha portato a una conclusione chiara: tenetevi le vostre goccioline – indossate mascherine.</p>
+<p>Non è difficile <a href="https://masks4all.co">farsele da soli</a> con una maglietta, un fazzoletto, un pezzo di carta da cucina o anche semplicemente indossando una sciarpa o una bandana sulla faccia. Idealmente, utilizzate un tessuto stretto che permette di respirare. I ricercatori raccomandano di includere uno strato di carta da cucina o un filtro usa e getta; potete semplicemente aggiungerlo tra due strati di tessuto. Non c’è alcuna evidenza che una mascherina debba essere fatta con mezzi speciali per essere efficace nel controllo alla fonte. Una mascherina di stoffa può essere lavata e riutilizzata, proprio come una maglietta.</p>
+<p>A quanto pare, se state incubando COVID-19, le persone a cui tenete vi saranno grate per aver indossato una mascherina.</p>
+</section>
+<section id="epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte" class="level2">
+<h2 class="anchored" data-anchor-id="epilogo-jeremy-mostra-come-funziona-il-controllo-alla-fonte">Epilogo: Jeremy mostra come funziona il controllo alla fonte</h2>
+<p>Ecco un piccolo esperimento di Jeremy sul controllo alla fonte!</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/F0RcH9DfuyE?si=s8joqyuNQgLojAVs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="riferimenti" class="level2">
+<h2 class="anchored" data-anchor-id="riferimenti">Riferimenti</h2>
+<ul>
+<li>Abaluck, Jason, Judith A. Chevalier, Nicholas A. Christakis, Howard Paul Forman, Edward H. Kaplan, Albert Ko, and Sten H. Vermund. 2020. “The Case for Universal Cloth Mask Adoption and Policies to Increase Supply of Medical Masks for Health Workers.” SSRN Scholarly Paper ID 3567438. Rochester, NY: Social Science Research Network. <a href="https://papers.ssrn.com/abstract=3567438" class="uri">https://papers.ssrn.com/abstract=3567438</a>.</li>
+<li>Bai, Yan, Lingsheng Yao, Tao Wei, Fei Tian, Dong-Yan Jin, Lijuan Chen, and Meiyun Wang. 2020. “Presumed Asymptomatic Carrier Transmission of Covid-19.” <em>Jama</em>.</li>
+<li>Bradford, W David, and Anne Mandich. 2015. “Some State Vaccination Laws Contribute to Greater Exemption Rates and Disease Outbreaks in the United States.” <em>Health Affairs</em> 34 (8): 1383–90.</li>
+<li>Brosseau, Lisa M., ScD, Margaret Sietsema, PhD Apr 01, and 2020. 2020. “COMMENTARY: Masks-for-All for COVID-19 Not Based on Sound Data.” <em>CIDRAP</em>. <a href="https://www.cidrap.umn.edu/news-perspective/2020/04/commentary-masks-all-covid-19-not-based-sound-data" class="uri">https://www.cidrap.umn.edu/news-perspective/2020/04/commentary-masks-all-covid-19-not-based-sound-data</a>.</li>
+<li>Cassell, Michael M, Daniel T Halperin, James D Shelton, and David Stanton. 2006. “Risk Compensation: The Achilles’ Heel of Innovations in Hiv Prevention?” <em>Bmj</em> 332 (7541): 605–7.</li>
+<li>Doremalen, Neeltje van, Trenton Bushmaker, Dylan H. Morris, Myndi G. Holbrook, Amandine Gamble, Brandi N. Williamson, Azaibi Tamin, et al.&nbsp;2020. “Aerosol and Surface Stability of SARS-CoV-2 as Compared with SARS-CoV-1.” <em>New England Journal of Medicine</em> 0 (0): null. <a href="https://doi.org/10.1056/NEJMc2004973" class="uri">https://doi.org/10.1056/NEJMc2004973</a>.</li>
+<li>Duguid, JP. 1946. “The Size and the Duration of Air-Carriage of Respiratory Droplets and Droplet-Nuclei.” <em>Epidemiology &amp; Infection</em> 44 (6): 471–79.</li>
+<li>Houston, David J, and Lilliard E Richardson. 2007. “Risk Compensation or Risk Reduction? Seatbelts, State Laws, and Traffic Fatalities.” <em>Social Science Quarterly</em> 88 (4): 913–36.</li>
+<li>Leffler, Christopher, Edsel Ing, Craig A. McKeown, Dennis Pratt, and Andrzej Grzybowski. 2020. “Country-Wide Mortality from the Novel Coronavirus (COVID-19) Pandemic and Notes Regarding Mask Usage by the Public.”</li>
+<li>Morawska, LJGR, GR Johnson, ZD Ristovski, Megan Hargreaves, K Mengersen, Steve Corbett, Christopher Yu Hang Chao, Yuguo Li, and David Katoshevski. 2009. “Size Distribution and Sites of Origin of Droplets Expelled from the Human Respiratory Tract During Expiratory Activities.” <em>Journal of Aerosol Science</em> 40 (3): 256–69.</li>
+<li>Ouellet, James V. 2011. “Helmet Use and Risk Compensation in Motorcycle Accidents.” <em>Traffic Injury Prevention</em> 12 (1): 71–81.</li>
+<li>Peng, Yinan, Namita Vaidya, Ramona Finnie, Jeffrey Reynolds, Cristian Dumitru, Gibril Njie, Randy Elder, et al.&nbsp;2017. “Universal Motorcycle Helmet Laws to Reduce Injuries: A Community Guide Systematic Review.” <em>American Journal of Preventive Medicine</em> 52 (6): 820–32.</li>
+<li>Rojas Castro, Daniela, Rosemary M Delabre, and Jean-Michel Molina. 2019. “Give Prep a Chance: Moving on from the ‘Risk Compensation’ Concept.” <em>Journal of the International AIDS Society</em> 22: e25351.</li>
+<li>To, Kelvin Kai-Wang, Owen Tak-Yin Tsang, Wai-Shing Leung, Anthony Raymond Tam, Tak-Chiu Wu, David Christopher Lung, Cyril Chik-Yan Yip, et al.&nbsp;2020. “Temporal profiles of viral load in posterior oropharyngeal saliva samples and serum antibody responses during infection by SARS-CoV-2: an observational cohort study.” <em>Lancet Infect. Dis.</em> 0 (0). <a href="https://doi.org/10.1016/S1473-3099(20)30196-1" class="uri">https://doi.org/10.1016/S1473-3099(20)30196-1</a>.</li>
+<li>Wei, Wycliffe E. 2020. “Presymptomatic Transmission of SARS-CoV-2 â€” Singapore, January 23â€“March 16, 2020.” <em>MMWR. Morbidity and Mortality Weekly Report</em> 69. <a href="https://doi.org/10.15585/mmwr.mm6914e1" class="uri">https://doi.org/10.15585/mmwr.mm6914e1</a>.</li>
+<li>Wells, WF. 1934. “On Air-Borne Infection: Study Ii. Droplets and Droplet Nuclei.” <em>American Journal of Epidemiology</em> 20 (3): 611–18.</li>
+<li>Yan, Jing, Suvajyoti Guha, Prasanna Hariharan, and Matthew Myers. 2019. “Modeling the Effectiveness of Respiratory Protective Devices in Reducing Influenza Outbreak.” <em>Risk Analysis</em> 39 (3): 647–61. <a href="https://doi.org/10.1111/risa.13181" class="uri">https://doi.org/10.1111/risa.13181</a>.</li>
+<li>Zhang, Juanjuan, Maria Litvinova, Wei Wang, Yan Wang, Xiaowei Deng, Xinghui Chen, Mei Li, et al.&nbsp;2020. “Evolving Epidemiology and Transmission Dynamics of Coronavirus Disease 2019 Outside Hubei Province, China: A Descriptive and Modelling Study.” <em>The Lancet Infectious Diseases</em> 0 (0). <a href="https://doi.org/10.1016/S1473-3099(20)30230-9" class="uri">https://doi.org/10.1016/S1473-3099(20)30230-9</a>.</li>
+<li>Zou, Lirong, Feng Ruan, Mingxing Huang, Lijun Liang, Huitao Huang, Zhongsi Hong, Jianxiang Yu, et al.&nbsp;2020. “SARS-CoV-2 Viral Load in Upper Respiratory Specimens of Infected Patients.” <em>New England Journal of Medicine</em> 382 (12): 1177–9. <a href="https://doi.org/10.1056/NEJMc2001737" class="uri">https://doi.org/10.1056/NEJMc2001737</a>.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
