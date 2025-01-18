@@ -1,0 +1,28 @@
+---
+title: "About Me"
+image: https://avatars.githubusercontent.com/u/9040082?v=4
+about:
+  template: jolla
+  links:
+    - text: "![](posts/images/bsky.svg){width=16} Bluesky"
+      href: https://bsky.app/profile/doctormiko.bsky.social
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/micbucci
+    - icon: github
+      text: Github
+      href: https://github.com/mikonapoli
+
+---
+
+Hi there, I am Miko.
+
+I am European, originally from Italy, currently residing in the UK after a decade or so of roaming around the continent.
+
+I am a mathematician, turned to the dark side of of the “real world” with a few fruitless postdocs under my belt.
+
+After a winding path that saw me being an intern, a knowledge/sales engineer, a product manager, I ended up in data science, learning a thing or two in the process.
+
+Hi there, I am Miko, I’m an accidental data scientist and I learn things, because I like it and because I must.
+
+Welcome to my site.
