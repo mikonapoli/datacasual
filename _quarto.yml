@@ -6,7 +6,7 @@ website:
   title: "Datacasual"
   site-url: https://datacasual.com/
   description: "Tales of an accidental data scientist"
-  google-analytics: "UA-163988972-1"
+  google-analytics: "G-95FSTBE8LH"
   navbar:
     right:
       - about.qmd
